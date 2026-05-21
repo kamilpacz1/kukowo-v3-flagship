@@ -1,0 +1,60 @@
+<!-- Mobile overlay -->
+<div class="mobile-menu__overlay" id="menuOverlay" onclick="closeMobileMenu()"></div>
+
+<!-- Mobile menu -->
+<div id="mobileMenu" class="mobile-menu" role="dialog" aria-modal="true" aria-label="Menu">
+  <button class="mobile-menu__close" onclick="closeMobileMenu()"><span></span><span></span></button>
+
+  <nav class="mobile-menu__nav">
+    <a href="konradowe-chaty.html" onclick="closeMobileMenu()">Konradowe Chaty</a>
+    <a href="studia-stara-stajnia.html" onclick="closeMobileMenu()" data-i18n="nav.stajnia">Studia w Starej Stajni</a>
+    <a href="kamperowisko.html" onclick="closeMobileMenu()" data-i18n="nav.kamper">Kamperowisko</a>
+    <a href="gallery.html" onclick="closeMobileMenu()" data-i18n="nav.galeria">Galeria</a>
+    <a href="okoliczne-atrakcje.html" onclick="closeMobileMenu()" data-i18n="nav.okolica">Okolica</a>
+  </nav>
+
+  <div class="mobile-menu__cta">
+    <a href="#booking" class="btn btn--primary" onclick="closeMobileMenu();const t=document.getElementById('booking');if(t){t.scrollIntoView({behavior:'smooth'});return false;}" data-i18n="kontakt.writeMail">Napisz do nas</a>
+    <a href="tel:+48604083659" class="btn btn--outline-white" data-i18n="header.call">Zadzwoń</a>
+  </div>
+
+  <!-- Language switcher mobile — simple buttons -->
+  <div class="lang-buttons" role="navigation" aria-label="Language">
+    <button class="lang-btn" onclick="changeLang('pl')" data-lang="pl">PL</button>
+    <button class="lang-btn" onclick="changeLang('en')" data-lang="en">EN</button>
+    <button class="lang-btn" onclick="changeLang('de')" data-lang="de">DE</button>
+  </div>
+</div>
+
+<!-- Main header -->
+<header id="mainHeader" class="header" role="banner">
+  <div class="header__inner container">
+    <a href="index.html" class="header__logo" aria-label="Siedlisko Konradówka — Start">
+      <span class="header__logo-serif">Siedlisko</span>
+      <span class="header__logo-name">Konradówka</span>
+    </a>
+
+    <nav class="header__nav" aria-label="Główna">
+      <a href="konradowe-chaty.html">Konradowe Chaty</a>
+      <a href="studia-stara-stajnia.html" data-i18n="nav.stajnia">Studia w Starej Stajni</a>
+      <a href="kamperowisko.html" data-i18n="nav.kamper">Kamperowisko</a>
+      <a href="gallery.html" data-i18n="nav.galeria">Galeria</a>
+      <a href="okoliczne-atrakcje.html" data-i18n="nav.okolica">Okolica</a>
+    </nav>
+
+    <div class="header__actions">
+      <!-- Language — 3 plain buttons, onclick, no dropdown -->
+      <div class="lang-buttons" id="langButtons" role="navigation" aria-label="Language">
+        <button class="lang-btn" onclick="changeLang('pl')" data-lang="pl">PL</button>
+        <button class="lang-btn" onclick="changeLang('en')" data-lang="en">EN</button>
+        <button class="lang-btn" onclick="changeLang('de')" data-lang="de">DE</button>
+      </div>
+
+      <a href="#booking" class="btn btn--primary btn--sm" data-i18n="header.checkAvailability" onclick="const t=document.getElementById('booking');if(t){t.scrollIntoView({behavior:'smooth'});return false;}">Napisz do nas</a>
+
+      <button class="header__hamburger" id="hamburgerBtn" onclick="openMobileMenu()" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>

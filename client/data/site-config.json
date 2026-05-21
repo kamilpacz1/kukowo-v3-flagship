@@ -1,0 +1,30 @@
+{
+  "_info": "PANEL ADMINA — jedna zmiana, pełna kontrola.",
+  "_lastUpdated": "2025-05-11",
+
+  "showFullBookingInfo": false,
+
+  "_showFullBookingInfo": {
+    "false": "TRYB PRESTIŻOWY — gość widzi elegancki formularz zapytania (bez cen, bez kalendarza). Kontakt przez WhatsApp lub e-mail.",
+    "true":  "TRYB TRANSPARENTNY — gość widzi pełny cennik z widełkami sezonowymi + interaktywny kalendarz dostępności."
+  },
+
+  "contact": {
+    "phone": "+48 604 083 659",
+    "whatsapp": "48604083659",
+    "email": "siedliskokonradowka@gmail.com",
+    "responseHours": 2,
+    "workingHours": "pn–nd, 8:00–22:00"
+  },
+
+  "analytics": {
+    "gaId": "G-XXXXXXXXXX",
+    "_info": "Wpisz swój Measurement ID z Google Analytics 4. Format: G-XXXXXXXXXX"
+  },
+
+  "emailjs": {
+    "serviceId": "service_g6tanel",
+    "templateId": "template_991rdou",
+    "publicKey": "WU6nK13OCtPUDJJad"
+  }
+}

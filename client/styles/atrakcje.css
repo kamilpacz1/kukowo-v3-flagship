@@ -1,0 +1,599 @@
+/* styles/atrakcje.css */
+
+/* ======================================================
+   1. ZMIENNE GLOBALNE & TYPOGRAFIA
+   ====================================================== */
+   :root {
+    --accent-color: #007BFF;
+    --bg-light: #f7f7f7;
+    --text-color: #333;
+    --heading-color: #222;
+    --font-descriptive: 'Lato', Arial, sans-serif;
+    --font-headings: 'Playfair Display', serif;
+    --color-primary: #2a6f4f;
+    --color-primary-hover: #245c42;
+    --color-accent-bg: #8a7d72;
+    --color-accent-border: #6e5f54;
+    --color-accent-hover: #a3988f;
+    --spacing-base: 1rem;
+    --spacing-lg: 2.5rem;
+    --border-radius: 0.75rem;
+    --transition-fast: 0.3s;
+    --shadow-light: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: var(--font-descriptive);
+    color: var(--text-color);
+    background: var(--bg-light);
+  }
+  h1,h2,h3 {
+    font-family: var(--font-headings);
+    margin-bottom: var(--spacing-base);
+    color: var(--heading-color);
+  }
+  .container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-base);
+  }
+  
+/* ======================================================
+   2. TABLE OF CONTENTS (Timeline) – right side (PRZEZROCZYSTY, NOWY STYL)
+   ====================================================== */
+   .page-toc {
+    position: fixed;
+    top: 50%;
+    right: 2%;
+    transform: translateY(-50%);
+    background: rgba(20, 20, 20, 0.4); /* bardziej przezroczysty */
+    color: #f8f8f8;
+    backdrop-filter: blur(6px); /* rozmycie tła */
+    -webkit-backdrop-filter: blur(6px); /* dla Safari */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    padding: 1.2rem;
+    z-index: 100;
+    max-width: 220px;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .page-toc ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .page-toc li {
+    position: relative;
+    padding-left: 1.2rem;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    color: #eee;
+  }
+  
+  .page-toc li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.3em;
+    width: 6px;
+    height: 6px;
+    background: #faf5ef;
+    border-radius: 50%;
+  }
+  
+  .page-toc li::after {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: 0.8em;
+    bottom: -0.5rem;
+    width: 2px;
+    background: #faf5ef;
+  }
+  
+  .page-toc li:last-child::after {
+    display: none;
+  }
+  
+  /* Linki - animacja na hover */
+  .page-toc a {
+    color: #faf5ef;
+    text-decoration: none;
+    transition: color 0.2s ease, text-shadow 0.2s ease;
+  }
+  
+  .page-toc a:hover {
+    color: var(--color-accent-hover);
+    text-shadow: 0 0 4px rgba(255, 255, 255, 0.6);
+    text-decoration: underline;
+  }
+  
+  /* Dodatkowe wyróżnienie aktywnej sekcji */
+  .page-toc a.active {
+    font-weight: bold;
+    color: var(--color-primary);
+    text-decoration: underline;
+  }  
+  
+  /* ======================================================
+     3. HERO BANNER WITH VIDEO
+     ====================================================== */
+  .hero-banner {
+    position: relative;
+    height: 80vh;
+    overflow: hidden;
+  }
+  .hero-video {
+    position: absolute;
+    top: 50%; left: 50%;
+    min-width: 100%; min-height: 100%;
+    width: auto; height: auto;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    z-index: 1;
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0) 70%, rgba(255, 255, 255, 1) 100%);
+    z-index: 2;
+    pointer-events: none;
+  }
+  
+  .hero-content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    color: #fff;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0 var(--spacing-base);
+  }
+  .hero-content h1 {
+    font-family: 'Amatic SC', cursive;
+    font-size: 4rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin: 0 auto;
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* dla lepszej czytelności na tle wideo */
+  }  
+  .hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: var(--spacing-base);
+  }
+  .btn-attractions {
+    display: inline-block;
+    margin: 0.5em auto;
+    padding: 0.75em 1.5em;
+    font-family: 'Amatic SC', cursive;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+    border-radius: 8px;
+    background: var(--color-accent-bg);
+    border: 2px solid var(--color-accent-border);
+    color: #faf5ef;
+    box-shadow: var(--shadow-light);
+    transition: background 0.25s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn-attractions:hover {
+    background: var(--color-accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+  }
+  
+ /* ==============================
+   4. ATTRACTIONS GRID & CARDS - KLIKALNE OBRAZY
+   ============================== */
+.attractions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-base);
+}
+
+.attraction-item {
+  background: #fff;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-light);
+  overflow: hidden;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  position: relative;
+}
+
+.attraction-item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.attraction-item a {
+  display: block;
+  overflow: hidden;
+  border-radius: var(--border-radius);
+}
+
+.attraction-item img {
+  width: 100%;
+  height: 280px; /* Zwiększona wysokość */
+  object-fit: cover;
+  filter: sepia(5%) brightness(95%) contrast(105%);
+  transition: transform 0.3s ease, filter 0.3s ease;
+  display: block;
+}
+
+.attraction-item:hover img {
+  transform: scale(1.05);
+  filter: brightness(1.1) saturate(1.1);
+}
+
+.attraction-item__content {
+  padding: var(--spacing-base);
+  text-align: center;
+}
+
+.attraction-item__content h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.attraction-item__content ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--spacing-base);
+  text-align: left;
+}
+
+.attraction-item__content ul li {
+  margin-bottom: 0.4rem;
+  font-size: 0.95rem;
+}
+
+/* Efekt podświetlenia mazurskiego na hover */
+.attraction-item::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom right, rgba(255, 240, 200, 0.2), rgba(190, 255, 210, 0.25));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.attraction-item:hover::after {
+  opacity: 1;
+}
+  
+  /* ======================================================
+     5. ADDITIONAL CONTENT
+     ====================================================== */
+  .google-reviews-section {
+    background: #f8f8f8;
+    padding: 60px 0;
+    text-align: center;
+  }
+  .google-reviews-section h2 {
+    margin-bottom: 1rem;
+  }
+  .google-reviews-section .reviews-subtitle {
+    color: #777;
+    margin-bottom: 2rem;
+  }
+  
+  /* ======================================================
+     6. AOS ANIMATIONS
+     ====================================================== */
+  [data-aos] {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  [data-aos].aos-animate {
+    opacity: 1;
+    transform: none;
+  }
+  
+  /* ======================================================
+     7. MEDIA QUERIES
+     ====================================================== */
+  @media (max-width: 992px) {
+    .page-toc { display: none; }
+    .hero-content h1 { font-size: 2.5rem; }
+  }
+  @media (max-width: 600px) {
+    .hero-content h1 { font-size: 2rem; }
+    .hero-content p    { font-size: 1rem; }
+  }
+/* ======================================================
+   8. HEADER – dynamiczny przezroczysty → biały po scrollu
+   ====================================================== */
+
+   .main-header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 80px;                             /* stała wysokość */
+    background: rgba(255, 255, 255, 0.05);     /* niższe krycie */
+    backdrop-filter: saturate(150%) blur(4px); /* lżejszy efekt szkła */
+    -webkit-backdrop-filter: saturate(150%) blur(4px);
+    border-bottom: 1px solid transparent;
+    border-image: linear-gradient(
+      to right,
+      rgba(255,255,255,0.5),
+      rgba(255,255,255,0.2),
+      rgba(255,255,255,0.5)
+    ) 1;
+    transition:
+      background 0.4s ease,
+      box-shadow 0.4s ease,
+      border-image 0.4s ease;
+    z-index: 999;
+  }
+  
+  .main-header.scrolled {
+    background: #fff;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    border-image: none;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+  }
+  
+  .header-container {
+    display: flex;
+    align-items: center;  /* wyśrodkuj w pionie */
+    justify-content: space-between;
+    height: 100%;         /* kontener rozciąga się na całą wysokość headera */
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo h1 {
+    margin: 0;
+    font-size: 1.6rem;
+    line-height: 1;
+  }
+  
+  .logo a {
+    font-family: 'Amatic SC', cursive;
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #fff;            /* biały na przezroczystym tle */
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .main-header.scrolled .logo a {
+    color: #333;            /* ciemny po scrollu */
+  }
+  
+  .desktop-nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .desktop-nav ul li a {
+    font-family: 'Amatic SC', cursive;
+    font-size: 1.3rem;
+    color: #fff;            /* biały na przezroczystym tle */
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  .main-header.scrolled .desktop-nav ul li a {
+    color: #333;            /* ciemny po scrollu */
+  }
+  
+  .desktop-nav ul li a:hover {
+    color: var(--color-primary-hover);
+  }
+  
+  .social-icons img {
+    width: 24px;
+    height: 24px;
+    margin-left: 1rem;
+    transition: transform 0.2s ease;
+  }
+  .social-icons img:hover {
+    transform: scale(1.1);
+  }
+  
+    /* ======================================================
+    9. CENTERING BUTTONS IN ATTRACTION CARDS
+    ====================================================== */
+  .attraction-item__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .attraction-item__content ul {
+    text-align: left;
+    width: 100%;
+  }
+
+  .attraction-item__content a.btn-attractions {
+    margin-top: 1rem;
+    align-self: center;
+  }
+
+
+  /* ======================================================
+   10. HEADER TEXT COLOR – jasne na przezroczystym tle
+   ====================================================== */
+.main-header {
+  color: white;
+}
+
+.main-header .logo a,
+.main-header .logo h1 a,
+.main-header .desktop-nav ul li a {
+  color: white;
+  transition: color 0.3s ease;
+}
+
+.main-header.scrolled .logo a,
+.main-header.scrolled .logo h1 a,
+.main-header.scrolled .desktop-nav ul li a {
+  color: #333;
+}
+
+/* ======================================================
+   11. SEKCJE: rytm, kontrast, przestrzeń, nagłówki
+   ====================================================== */
+   section:nth-of-type(even) {
+    background-color: #f1eee9;
+  }
+  section:nth-of-type(odd) {
+    background-color: #ffffff;
+  }
+  section {
+    padding: 4rem 0;
+  }
+  
+  section h2 {
+    font-size: 2.4rem;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: var(--color-primary);
+    position: relative;
+  }
+  section h2::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: var(--color-accent-border);
+    margin: 0.5rem auto;
+    border-radius: 2px;
+  }
+  
+  /* ======================================================
+     12. KARTY ATRAKCJI – estetyka tekstu i hover
+     ====================================================== */
+  .attraction-item__content ul {
+    max-width: 90%;
+    margin: 0 auto var(--spacing-base);
+    text-align: left;
+  }
+  
+  .attraction-item:hover img {
+    transform: scale(1.05) translateY(-2px);
+  }
+  
+  /* ======================================================
+     13. AOS – globalny efekt wejścia sekcji
+     ====================================================== */
+  [data-aos] {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  [data-aos].aos-animate {
+    opacity: 1;
+    transform: none;
+  }
+  
+  /* ======================================================
+     14. TŁO – sekcja z opiniami Google
+     ====================================================== */
+  .google-reviews-section {
+    background: linear-gradient(to bottom right, #fdfcf9, #e7e1da);
+    background-image: url('img/bg-texture.png'); /* tekstura opcjonalna */
+    background-repeat: repeat;
+    background-size: contain;
+    padding: 60px 0;
+    text-align: center;
+  }
+  
+
+  /* ======================================================
+   15. TYPOGRAFIA – nagłówki w stylu Amatic SC
+   ====================================================== */
+
+/* Czcionka Amatic SC jako główna dla nagłówków */
+:root {
+  --font-headings: 'Amatic SC', cursive;
+}
+
+/* Styl nagłówków */
+h1, h2, h3, h4, .section-title {
+  font-family: var(--font-headings);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+  color: var(--heading-color);
+  text-align: center;
+  margin-bottom: var(--spacing-base);
+}
+
+/* Rozmiary nagłówków */
+h1 {
+  font-size: 4rem;
+}
+h2 {
+  font-size: 2.8rem;
+}
+h3 {
+  font-size: 2rem;
+}
+h4 {
+  font-size: 1.6rem;
+}
+
+
+
+
+.attraction-item {
+  position: relative;
+  overflow: hidden;
+}
+
+.attraction-item::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom right, rgba(255, 240, 200, 0.2), rgba(190, 255, 210, 0.25));
+  mix-blend-mode: lighten;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.attraction-item:hover::after {
+  opacity: 1;
+}
+
+.attraction-item img {
+  transition: transform 0.3s ease, filter 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.attraction-item:hover img {
+  transform: scale(1.05) translateY(-2px);
+  filter: brightness(1.1) saturate(1.05);
+}
+
+
+/* ======================================================
+  PREWENCJA PRZECIĄGANIA OBRAZÓW I WIDEO
+   ====================================================== */
+   img, video {
+    -webkit-user-drag: none; /* Działa w Chrome/Safari/Edge */
+    pointer-events: auto;    /* Pozwala np. na kliknięcie w lightbox, ale blokuje przeciąganie */
+  }

@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Galeria – Siedlisko Konradówka</title>
+  <meta name="description" content="Galeria zdjęć Siedliska Konradówka — Konradowe Chaty, Stara Stajnia, kamperowisko i otoczenie.">
+  <link rel="canonical" href="https://kukowo.pl/gallery.html">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/main.css?v=20260601">
+  <style>
+    /* ── Gallery page styles ── */
+    .gallery-page { padding-bottom: 5rem; }
+
+    /* Hero */
+    .gallery-hero {
+      padding: clamp(5rem,10vw,8rem) 0 clamp(2rem,4vw,3rem);
+      text-align: center;
+      background: var(--clr-cream);
+    }
+    .gallery-hero__label {
+      font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--clr-gold); margin-bottom: 0.75rem; display: block;
+    }
+    .gallery-hero__title {
+      font-family: var(--ff-serif); font-size: clamp(2.25rem,5vw,3.75rem);
+      font-weight: 400; color: var(--clr-forest); line-height: 1.05;
+    }
+    .gallery-hero__title em { font-style: italic; }
+    .gallery-hero__sub {
+      font-size: 0.95rem; color: var(--clr-muted); margin-top: 0.875rem;
+      max-width: 42ch; margin-inline: auto; line-height: 1.7;
+    }
+
+    /* Filter tabs */
+    .gallery-filters {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+      justify-content: center;
+      padding: 1.75rem 1.5rem 2rem;
+      position: sticky; top: var(--header-h); z-index: 50;
+      background: var(--clr-cream);
+      border-bottom: 1px solid var(--clr-sand);
+    }
+    .gallery-filter {
+      padding: 0.45rem 1.125rem;
+      border: 1.5px solid var(--clr-sand);
+      border-radius: 100px;
+      background: transparent;
+      font-family: var(--ff-sans);
+      font-size: 0.8rem; font-weight: 500;
+      color: var(--clr-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .gallery-filter:hover {
+      border-color: var(--clr-forest);
+      color: var(--clr-forest);
+    }
+    .gallery-filter.active {
+      background: var(--clr-forest);
+      border-color: var(--clr-forest);
+      color: #fff;
+    }
+    .gallery-filter__count {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      font-size: 0.65rem; font-weight: 700; margin-left: 4px;
+    }
+    .gallery-filter:not(.active) .gallery-filter__count {
+      background: var(--clr-sand); color: var(--clr-muted);
+    }
+
+    /* Grid */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      padding: 6px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .gallery-cell {
+      position: relative; overflow: hidden;
+      cursor: pointer; background: var(--clr-sand);
+      aspect-ratio: 4/3;
+      transition: opacity 0.35s;
+    }
+    .gallery-cell--wide {
+      grid-column: span 2;
+      aspect-ratio: 16/9;
+    }
+    .gallery-cell--tall {
+      grid-row: span 2;
+      aspect-ratio: 3/4;
+    }
+
+    .gallery-cell img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94),
+                  filter 0.4s;
+      filter: brightness(0.96);
+    }
+    .gallery-cell:hover img {
+      transform: scale(1.05);
+      filter: brightness(1.02) saturate(1.05);
+    }
+
+    /* Hover overlay with category label */
+    .gallery-cell__info {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 1rem 0.875rem 0.75rem;
+      background: linear-gradient(to top, rgba(15,28,18,0.7) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      display: flex; align-items: flex-end; justify-content: space-between;
+    }
+    .gallery-cell:hover .gallery-cell__info { opacity: 1; }
+    .gallery-cell__cat {
+      font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(253,250,245,0.8);
+    }
+    .gallery-cell__zoom {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: rgba(253,250,245,0.15); border: 1px solid rgba(253,250,245,0.3);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(253,250,245,0.9); flex-shrink: 0;
+    }
+
+    /* Hidden state for filter */
+    .gallery-cell.is-hidden {
+      display: none;
+    }
+
+    /* ── LIGHTBOX ── */
+    .g-lightbox {
+      display: none;
+      position: fixed; inset: 0; z-index: 900;
+      background: rgba(8, 16, 10, 0.96);
+      flex-direction: column;
+      align-items: center; justify-content: center;
+    }
+    .g-lightbox.is-open { display: flex; }
+
+    .g-lightbox__img-wrap {
+      position: relative;
+      width: 100%; flex: 1;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+      padding: 3rem 5rem;
+    }
+    .g-lightbox__img {
+      max-width: 100%; max-height: 100%;
+      object-fit: contain;
+      border-radius: 4px;
+      transition: opacity 0.25s, transform 0.25s;
+      display: block;
+    }
+    .g-lightbox__img.is-loading {
+      opacity: 0; transform: scale(0.97);
+    }
+
+    /* Nav buttons */
+    .g-lightbox__btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 52px; height: 52px; border-radius: 50%;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.8); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+      z-index: 2;
+    }
+    .g-lightbox__btn:hover {
+      background: rgba(255,255,255,0.18); color: #fff;
+      transform: translateY(-50%) scale(1.05);
+    }
+    .g-lightbox__prev { left: 1rem; }
+    .g-lightbox__next { right: 1rem; }
+
+    /* Close */
+    .g-lightbox__close {
+      position: absolute; top: 1.25rem; right: 1.25rem;
+      width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.7); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s; z-index: 910;
+    }
+    .g-lightbox__close:hover { background: rgba(255,255,255,0.2); color: #fff; }
+
+    /* Bottom bar */
+    .g-lightbox__bar {
+      width: 100%; padding: 1rem 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .g-lightbox__counter {
+      font-size: 0.75rem; color: rgba(255,255,255,0.4);
+      letter-spacing: 0.08em; font-variant-numeric: tabular-nums;
+    }
+    .g-lightbox__cat-label {
+      font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(196,154,60,0.7);
+    }
+    .g-lightbox__dots {
+      display: flex; gap: 5px; align-items: center;
+    }
+    .g-lightbox__dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      transition: background 0.2s, transform 0.2s;
+    }
+    .g-lightbox__dot.active {
+      background: rgba(196,154,60,0.8);
+      transform: scale(1.4);
+    }
+
+    /* Responsive grid */
+    @media (max-width: 900px) {
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-cell--wide { grid-column: span 2; }
+      .gallery-cell--tall { grid-row: span 1; aspect-ratio: 4/3; }
+    }
+    @media (max-width: 560px) {
+      .gallery-grid { grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; }
+      .gallery-cell--wide { grid-column: span 2; }
+      .gallery-filters { gap: 0.375rem; padding: 1.25rem 1rem 1.5rem; }
+      .gallery-filter { font-size: 0.75rem; padding: 0.4rem 0.875rem; }
+      .g-lightbox__img-wrap { padding: 3rem 3rem; }
+      .g-lightbox__btn { width: 40px; height: 40px; }
+      .g-lightbox__prev { left: 0.375rem; }
+      .g-lightbox__next { right: 0.375rem; }
+    }
+  </style>
+  <!-- Mobile / PWA optimization -->
+  <meta name="theme-color" content="#1E3528">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Konradówka">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="manifest.webmanifest">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Galeria — zdjęcia chat, studiów i siedliska | Konradówka">
+  <meta property="og:description" content="Galeria zdjęć Siedliska Konradówka — Konradowe Chaty, Stara Stajnia, Kamperowisko, stawy i okolice.">
+  <meta property="og:image" content="https://kukowo.pl/img/siedlisko/1.jpg">
+  <meta property="og:locale" content="pl_PL">
+  <meta property="og:site_name" content="Siedlisko Konradówka">
+  
+  <!-- Twitter Cards (Fix #26) -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Galeria — zdjęcia chat, studiów i siedliska | Konradówka">
+  <meta name="twitter:description" content="Galeria zdjęć Siedliska Konradówka — Konradowe Chaty, Stara Stajnia, Kamperowisko, stawy i okolice.">
+  <meta name="twitter:image" content="https://kukowo.pl/img/siedlisko/1.jpg">
+</head>
+<body class="has-fixed-header has-light-header">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div id="header-placeholder"></div>
+
+  <main id="main" class="gallery-page">
+
+    <!-- Hero -->
+    <div class="gallery-hero">
+      <span class="gallery-hero__label" data-i18n="page.gallery.label">Klimat miejsca</span>
+      <h1 class="gallery-hero__title">
+        <span data-i18n="page.gallery.title1">Galeria</span><br>
+        <em data-i18n="page.gallery.title2">Siedliska Konradówka</em>
+      </h1>
+      <p class="gallery-hero__sub" data-i18n="page.gallery.desc">
+        Zdjęcia z Konradowych Chat, Starej Stajni, kamperowiska i otoczenia.
+      </p>
+    </div>
+
+    <!-- Filter tabs -->
+    <div class="gallery-filters" role="tablist">
+      <button class="gallery-filter active" data-filter="all" data-i18n="gallery.filter.all">Wszystkie</button>
+      <button class="gallery-filter" data-filter="chaty" data-i18n="gallery.filter.chaty">Konradowe Chaty</button>
+      <button class="gallery-filter" data-filter="stajnia" data-i18n="gallery.filter.stajnia">Stara Stajnia</button>
+      <button class="gallery-filter" data-filter="kamper" data-i18n="gallery.filter.kamper">Kamperowisko</button>
+      <button class="gallery-filter" data-filter="siedlisko" data-i18n="gallery.filter.siedlisko">Siedlisko</button>
+    </div>
+
+    <!-- Grid -->
+    <div class="gallery-grid" id="galleryGrid">
+
+      <!-- Konradowe Chaty — 1 wide hero -->
+      <div class="gallery-cell gallery-cell--wide" data-filter="chaty" data-cat="Konradowe Chaty" data-src="img/konradowe_chaty/konradowe-chaty-1.jpg">
+        <picture><source srcset="img/konradowe_chaty/konradowe-chaty-1-600.webp 600w, img/konradowe_chaty/konradowe-chaty-1-1200.webp 1200w, img/konradowe_chaty/konradowe-chaty-1.webp 2000w" sizes="(max-width: 900px) 50vw, 33vw" type="image/webp"><img alt="Drewniana chata z tarasem nad stawem — Siedlisko Konradówka" src="img/konradowe_chaty/konradowe-chaty-1.jpg" loading="lazy" decoding="async"></picture>
+        <div class="gallery-cell__info"><span class="gallery-cell__cat" data-i18n="page.gallery.s1">Konradowe Chaty</span><div class="gallery-cell__zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
+      </div>
+      <div class="gallery-cell" data-filter="chaty" data-cat="Konradowe Chaty" data-src="img/konradowe_chaty/konradowe-chaty-2.jpg">
+        <picture><source srcset="img/konradowe_chaty/konradowe-chaty-2.webp" type="image/webp"><img alt="Wnętrze chaty Konradowej z kominkiem i drewnianym wykończeniem" src="img/konradowe_chaty/konradowe-chaty-2.jpg" loading="lazy" decoding="async"></picture>
+        <div class="gallery-cell__info"><span class="gallery-cell__cat" data-i18n="page.gallery.s1">Konradowe Chaty</span><div class="gallery-cell__zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
+      </div>
+      <div class="gallery-cell" data-filter="chaty" data-cat="Konradowe Chaty" data-src="img/konradowe_chaty/konradowe-chaty-3.jpg">
+        <picture><source srcset="img/konradowe_chaty/konradowe-chaty-3-600.webp 600w, img/konradowe_chaty/konradowe-chaty-3-1200.webp 1200w, img/konradowe_chaty/konradowe-chaty-3.webp 2000w" sizes="(max-width: 900px) 50vw, 33vw" type="image/webp"><img alt="Kuchnia w chacie — pełne wyposażenie" src="img/konradowe_chaty/konradowe-chaty-3.jpg" loading="lazy" decoding="async"></picture>
+        <div class="gallery-cell__info"><span class="gallery-cell__cat" data-i18n="page.gallery.s1">Konradowe Chaty</span><div class="gallery-cell__zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
+      </div>
+      <div class="gallery-cell" data-filter="chaty" data-cat="Konradowe Chaty" data-src="img/konradowe_chaty/konradowe-chaty-4.jpg">
+        <picture><source srcset="img/konradowe_chaty/konradowe-chaty-4-600.webp 600w, img/konradowe_chaty/konradowe-chaty-4-1200.webp 1200w, img/konradowe_chaty/konradowe-chaty-4.webp 2000w" sizes="(max-width: 900px) 50vw, 33vw" type="image/webp"><img alt="Sypialnia na pięterze z drewnianym sufitem" src="img/konradowe_chaty/konradowe-chaty-4.jpg" loading="lazy" decoding="async"></picture>
+        <div class="gallery-cell__info"><span class="gallery-cell__cat" data-i18n="page.gallery.s1">Konradowe Chaty</span><div class="gallery-cell__zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
+      </div>
+      <div class="gallery-cell gallery-cell--wide" data-filter="chaty" data-cat="Konradowe Chaty" data-src="img/konradowe_chaty/konradowe-chaty-5.jpg">
+        <picture><source srcset="img/konradowe_chaty/konradowe-chaty-5-600.webp 600w, img/konradowe_chaty/konradowe-chaty-5-1200.webp 1200w, img/konradowe_chaty/konradowe-chaty-5.webp 2000w" sizes="(max-width: 900px) 50vw, 33vw" type="image/webp"><img alt="Łazienka w chacie Konradowej" src="img/konradowe_chaty/konradowe-chaty-5.jpg" loading="lazy" decoding="async"></picture>
+        <div class="gallery-cell__info"><span class="gallery-cell__cat" data-i18n="page.gallery.s1">Konradowe Chaty</span><div class="gallery-cell__zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
+      </div>
+      <div class="gallery-cell" data-filter="chaty" data-cat="Konradowe Chaty" data-src="img/konradowe_chaty/konradowe-chaty-6.jpg">
+        <picture><source srcset="img/konradowe_chaty/konradowe-chaty-6-600.webp 600w, img/konradowe_chaty/konradowe-chaty-6-1200.webp 1200w, img/konradowe_chaty/konradowe-chaty-6.webp 2000w" sizes="(max-width: 900px) 50vw, 33vw" type="image/webp"><img alt="Taras chaty z widokiem na staw o zachodzie słońca" src="img/konradowe_chaty/konradowe-chaty-6.jpg" loading="lazy" decoding="async"></picture>
+        <div class="gallery-cell__info"><span class="gallery-cell__cat" data-i18n="page.gallery.s1">Konradowe Chaty</span><div class="gallery-cell__zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
+      </div>
+      <div class="gallery-cell" data-filter="chaty" data-cat="Konradowe Chaty" data-src="img/konradowe_chaty/konradowe-chaty-7.jpg">
+        <picture><source srcset="img/konradowe_chaty/konradowe-chaty-7-600.webp 600w, img/konradowe_chaty/konradowe-chaty-7-1200.webp 1200w, img/konradowe_chaty/konradowe-chaty-7.webp 2000w" sizes="(max-width: 900px) 50vw, 33vw" type="image/webp"><img alt="Drewniane schody do sypialni na piętrze" src="img/konradowe_chaty/konradowe-chaty-7.jpg" loading="lazy" decoding="async"></picture>
+        <div class="gallery-cell__info"><span class="gallery-cell__cat" data-i18n="page.gallery.s1">Konradowe Chaty</span><div class="gallery-cell__zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
+      </div>
+      <div class="gallery-cell" data-filter="chaty" data-cat="Konradowe Chaty" data-src="img/konradowe_chaty/konradowe-chaty-8.jpg">
+        <picture><source srcset="img/konradowe_chaty/konradowe-chaty-8-600.webp 600w, img/konradowe_chaty/konradowe-chaty-8-1200.webp 1200w, img/konradowe_chaty/konradowe-chaty-8.webp 2000w" sizes="(max-width: 900px) 50vw, 33vw" type="image/webp"><img alt="Salon chaty z kominkiem zimą" src="img/konradowe_chaty/konradowe-chaty-8.jpg" loading="lazy" decoding="async"></picture>
+        <div class="gallery-cell__info"><span class="gallery-cell__cat" data-i18n="page.gallery.s1">Konradowe Chaty</span><div class="gallery-cell__zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
+      </div>
+
+      <!-- Stara Stajnia — wide hero -->
+      <div class="gallery-cell gallery-cell--wide" data-filter="stajnia" data-cat="Stara Stajnia" data-src="img/studia_stara_stajnia/studio-main.jpg">
+        <picture><source srcset="img/studia_stara_stajnia/studio-main-600.webp 600w, img/studia_stara_stajnia/studio-main-1200.webp 1200w, img/studia_stara_stajnia/studio-main.webp 2000w" sizes="(max-width: 900px) 50vw, 33vw" type="image/webp"><img alt="Studio w Starej Stajni — odrestaurowane wnętrze z 1908 roku" src="img/studia_stara_stajnia/studio-main.jpg" loading="lazy" decoding="async"></picture>
+        <div class="gallery-cell__info"><span class="gallery-cell__cat" data-i18n="page.gallery.s2">Stara Stajnia</span><div class="gallery-cell__zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
+      </div>
+      <div class="gallery-cell" data-filter="stajnia" data-cat="Stara Stajnia" data-src="img/studia_stara_stajnia/studio-1.jpg">
+        <picture><source srcset="img/studia_stara_stajnia/studio-1-600.webp 600w, img/studia_stara_stajnia/studio-1-1200.webp 1200w, img/studia_stara_stajnia/studio-1.webp 2000w" sizes="(max-width: 900px) 50vw, 33vw" type="image/webp"><img alt="Kameralne studio dla par w Starej Stajni" src="img/studia_stara_stajnia/studio-1.jpg" loading="lazy" decoding="async"></picture>
+        <div class="gallery-cell__info"><span class="gallery-cell__cat" data-i18n="page.gallery.s2">Stara Stajnia</span><div class="gallery-cell__zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
+      </div>
+      <div class="gallery-cell" data-filter="stajnia" data-cat="Stara Stajnia" data-src="img/studia_stara_stajnia/studio-2.jpg">
+        <picture><source srcset="img/studia_stara_stajnia/studio-2-600.webp 600w, img/studia_stara_stajnia/studio-2-1200.webp 1200w, img/studia_stara_stajnia/studio-2.webp 2000w" sizes="(max-width: 900px) 50vw, 33vw" type="image/webp"><img alt="Sypialnia w studiu z dębowym łóżkiem" src="img/studia_stara_stajnia/studio-2.jpg" loading="lazy" decoding="async"></picture>
+        <div class="gallery-cell__info"><span class="gallery-cell__cat" data-i18n="page.gallery.s2">Stara Stajnia</span><div class="gallery-cell__zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
+      </div>
+      <div class="gallery-cell" data-filter="stajnia" data-cat="Stara Stajnia" data-src="img/studia_stara_stajnia/studio-3.jpg">
+        <picture><source srcset="img/studia_stara_stajnia/studio-3.webp" type="image/webp"><img alt="Aneks kuchenny w studiu — minimalistyczny design" src="img/studia_stara_stajnia/studio-3.jpg" loading="lazy" decoding="async"></picture>
+        <div class="gallery-cell__info"><span class="gallery-cell__cat" data-i18n="page.gallery.s2">Stara Stajnia</span><div class="gallery-cell__zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
+      </div>
+      <div class="gallery-cell" data-filter="stajnia" data-cat="Stara Stajnia" data-src="img/studia_stara_stajnia/studio-4.jpg">
+        <picture><source srcset="img/studia_stara_stajnia/studio-4-600.webp 600w, img/studia_stara_stajnia/studio-4-1200.webp 1200w, img/studia_stara_stajnia/studio-4.webp 2000w" sizes="(max-width: 900px) 50vw, 33vw" type="image/webp"><img alt="Łazienka studia z prysznicem" src="img/studia_stara_stajnia/studio-4.jpg" loading="lazy" decoding="async"></picture>
+        <div class="gallery-cell__info"><span class="gallery-cell__cat" data-i18n="page.gallery.s2">Stara Stajnia</span><div class="gallery-cell__zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
+      </div>
+      <div class="gallery-cell" data-filter="stajnia" data-cat="Stara Stajnia" data-src="img/studia_stara_stajnia/studio-5.jpg">
+        <picture><source srcset="img/studia_stara_stajnia/studio-5-600.webp 600w, img/studia_stara_stajnia/studio-5-1200.webp 1200w, img/studia_stara_stajnia/studio-5.webp 2000w" sizes="(max-width: 900px) 50vw, 33vw" type="image/webp"><img alt="Okno studia z widokiem na podwórko" src="img/studia_stara_stajnia/studio-5.jpg" loading="lazy" decoding="async"></picture>
+        <div class="gallery-cell__info"><span class="gallery-cell__cat" data-i18n="page.gallery.s2">Stara Stajnia</span><div class="gallery-cell__zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
+      </div>
+      <div class="gallery-cell" data-filter="stajnia" data-cat="Stara Stajnia" data-src="img/studia_stara_stajnia/studio4-1.jpg">
+        <picture><source srcset="img/studia_stara_stajnia/studio4-1.webp" type="image/webp"><img alt="Drugie studio w Starej Stajni — układ rodzinny" src="img/studia_stara_stajnia/studio4-1.jpg" loading="lazy" decoding="async"></picture>
+        <div class="gallery-cell__info"><span class="gallery-cell__cat" data-i18n="page.gallery.s2">Stara Stajnia</span><div class="gallery-cell__zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
+      </div>
+
+      <!-- Kamperowisko — wide hero -->
+      <div class="gallery-cell gallery-cell--wide" data-filter="kamper" data-cat="Kamperowisko" data-src="img/kamperowisko/kamperowisko-1.jpg">
+        <picture><source srcset="img/kamperowisko/kamperowisko-1-600.webp 600w, img/kamperowisko/kamperowisko-1-1200.webp 1200w, img/kamperowisko/kamperowisko-1.webp 2000w" sizes="(max-width: 900px) 50vw, 33vw" type="image/webp"><img alt="Kamperowisko nad stawem — miejsca pod kampery" src="img/kamperowisko/kamperowisko-1.jpg" loading="lazy" decoding="async"></picture>
+        <div class="gallery-cell__info"><span class="gallery-cell__cat" data-i18n="page.gallery.s3">Kamperowisko</span><div class="gallery-cell__zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
+      </div>
+      <div class="gallery-cell" data-filter="kamper" data-cat="Kamperowisko" data-src="img/kamperowisko/kamperowisko-2.jpg">
+        <picture><source srcset="img/kamperowisko/kamperowisko-2-600.webp 600w, img/kamperowisko/kamperowisko-2-1200.webp 1200w, img/kamperowisko/kamperowisko-2.webp 2000w" sizes="(max-width: 900px) 50vw, 33vw" type="image/webp"><img alt="Pole namiotowe z dostępem do stawu" src="img/kamperowisko/kamperowisko-2.jpg" loading="lazy" decoding="async"></picture>
+        <div class="gallery-cell__info"><span class="gallery-cell__cat" data-i18n="page.gallery.s3">Kamperowisko</span><div class="gallery-cell__zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
+      </div>
+      <div class="gallery-cell" data-filter="kamper" data-cat="Kamperowisko" data-src="img/kamperowisko/kamperowisko-3.jpg">
+        <picture><source srcset="img/kamperowisko/kamperowisko-3-600.webp 600w, img/kamperowisko/kamperowisko-3-1200.webp 1200w, img/kamperowisko/kamperowisko-3.webp 2000w" sizes="(max-width: 900px) 50vw, 33vw" type="image/webp"><img alt="Stanowiska kamperowe z prądem 230V" src="img/kamperowisko/kamperowisko-3.jpg" loading="lazy" decoding="async"></picture>
+        <div class="gallery-cell__info"><span class="gallery-cell__cat" data-i18n="page.gallery.s3">Kamperowisko</span><div class="gallery-cell__zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
+      </div>
+      <div class="gallery-cell" data-filter="kamper" data-cat="Kamperowisko" data-src="img/kamperowisko/kamperowisko-4.jpg">
+        <picture><source srcset="img/kamperowisko/kamperowisko-4-600.webp 600w, img/kamperowisko/kamperowisko-4-1200.webp 1200w, img/kamperowisko/kamperowisko-4.webp 2000w" sizes="(max-width: 900px) 50vw, 33vw" type="image/webp"><img alt="Sanitariaty na kamperowisku" src="img/kamperowisko/kamperowisko-4.jpg" loading="lazy" decoding="async"></picture>
+        <div class="gallery-cell__info"><span class="gallery-cell__cat" data-i18n="page.gallery.s3">Kamperowisko</span><div class="gallery-cell__zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
+      </div>
+      <div class="gallery-cell" data-filter="kamper" data-cat="Kamperowisko" data-src="img/kamperowisko/kamperowisko-5.jpg">
+        <picture><source srcset="img/kamperowisko/kamperowisko-5-600.webp 600w, img/kamperowisko/kamperowisko-5-1200.webp 1200w, img/kamperowisko/kamperowisko-5.webp 2000w" sizes="(max-width: 900px) 50vw, 33vw" type="image/webp"><img alt="Wieczór nad stawem w Kamperowisku" src="img/kamperowisko/kamperowisko-5.jpg" loading="lazy" decoding="async"></picture>
+        <div class="gallery-cell__info"><span class="gallery-cell__cat" data-i18n="page.gallery.s3">Kamperowisko</span><div class="gallery-cell__zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
+      </div>
+      <div class="gallery-cell" data-filter="kamper" data-cat="Kamperowisko" data-src="img/kamperowisko/kamperowisko-6.jpg">
+        <picture><source srcset="img/kamperowisko/kamperowisko-6-600.webp 600w, img/kamperowisko/kamperowisko-6-1200.webp 1200w, img/kamperowisko/kamperowisko-6.webp 2000w" sizes="(max-width: 900px) 50vw, 33vw" type="image/webp"><img alt="Kamper i namiot w Siedlisku Konradówka" src="img/kamperowisko/kamperowisko-6.jpg" loading="lazy" decoding="async"></picture>
+        <div class="gallery-cell__info"><span class="gallery-cell__cat" data-i18n="page.gallery.s3">Kamperowisko</span><div class="gallery-cell__zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
+      </div>
+
+      <!-- Siedlisko — wide hero -->
+      <div class="gallery-cell gallery-cell--wide" data-filter="siedlisko" data-cat="Siedlisko" data-src="img/siedlisko/1.jpg">
+        <picture><source srcset="img/siedlisko/1.webp" type="image/webp"><img alt="Staw w Siedlisku Konradówka o świcie" src="img/siedlisko/1.jpg" loading="lazy" decoding="async"></picture>
+        <div class="gallery-cell__info"><span class="gallery-cell__cat" data-i18n="page.gallery.s4">Siedlisko i natura</span><div class="gallery-cell__zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
+      </div>
+      <div class="gallery-cell" data-filter="siedlisko" data-cat="Siedlisko" data-src="img/siedlisko/2.jpg">
+        <picture><source srcset="img/siedlisko/2.webp" type="image/webp"><img alt="Pomost nad stawem z kajakami" src="img/siedlisko/2.jpg" loading="lazy" decoding="async"></picture>
+        <div class="gallery-cell__info"><span class="gallery-cell__cat" data-i18n="page.gallery.s4">Siedlisko i natura</span><div class="gallery-cell__zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
+      </div>
+      <div class="gallery-cell" data-filter="siedlisko" data-cat="Siedlisko" data-src="img/siedlisko/3.jpg">
+        <picture><source srcset="img/siedlisko/3.webp" type="image/webp"><img alt="Ognisko wieczorem na 8 hektarach siedliska" src="img/siedlisko/3.jpg" loading="lazy" decoding="async"></picture>
+        <div class="gallery-cell__info"><span class="gallery-cell__cat" data-i18n="page.gallery.s4">Siedlisko i natura</span><div class="gallery-cell__zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
+      </div>
+      <div class="gallery-cell" data-filter="siedlisko" data-cat="Siedlisko" data-src="img/siedlisko/4.jpg">
+        <picture><source srcset="img/siedlisko/4.webp" type="image/webp"><img alt="Rowery w wynajmie — przejażdżki po Mazurach" src="img/siedlisko/4.jpg" loading="lazy" decoding="async"></picture>
+        <div class="gallery-cell__info"><span class="gallery-cell__cat" data-i18n="page.gallery.s4">Siedlisko i natura</span><div class="gallery-cell__zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
+      </div>
+      <div class="gallery-cell" data-filter="siedlisko" data-cat="Siedlisko" data-src="img/siedlisko/5.jpg">
+        <picture><source srcset="img/siedlisko/5.webp" type="image/webp"><img alt="Łąki i pola Mazur Garbatych — okolica Kukowa" src="img/siedlisko/5.jpg" loading="lazy" decoding="async"></picture>
+        <div class="gallery-cell__info"><span class="gallery-cell__cat" data-i18n="page.gallery.s4">Siedlisko i natura</span><div class="gallery-cell__zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
+      </div>
+      <div class="gallery-cell" data-filter="siedlisko" data-cat="Siedlisko" data-src="img/siedlisko/6.jpg">
+        <picture><source srcset="img/siedlisko/6.webp" type="image/webp"><img alt="Drewniany pomost nad stawem do kąpieli" src="img/siedlisko/6.jpg" loading="lazy" decoding="async"></picture>
+        <div class="gallery-cell__info"><span class="gallery-cell__cat" data-i18n="page.gallery.s4">Siedlisko i natura</span><div class="gallery-cell__zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
+      </div>
+      <div class="gallery-cell" data-filter="siedlisko" data-cat="Siedlisko" data-src="img/siedlisko/7.jpg">
+        <picture><source srcset="img/siedlisko/7.webp" type="image/webp"><img alt="Zachód słońca nad stawem w siedlisku" src="img/siedlisko/7.jpg" loading="lazy" decoding="async"></picture>
+        <div class="gallery-cell__info"><span class="gallery-cell__cat" data-i18n="page.gallery.s4">Siedlisko i natura</span><div class="gallery-cell__zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
+      </div>
+      <div class="gallery-cell gallery-cell--wide" data-filter="siedlisko" data-cat="Siedlisko" data-src="img/siedlisko/8.jpg">
+        <picture><source srcset="img/siedlisko/8.webp" type="image/webp"><img alt="Wschód słońca i mgła nad łąką" src="img/siedlisko/8.jpg" loading="lazy" decoding="async"></picture>
+        <div class="gallery-cell__info"><span class="gallery-cell__cat" data-i18n="page.gallery.s4">Siedlisko i natura</span><div class="gallery-cell__zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
+      </div>
+      <div class="gallery-cell" data-filter="siedlisko" data-cat="Siedlisko" data-src="img/siedlisko/9.jpg">
+        <picture><source srcset="img/siedlisko/9.webp" type="image/webp"><img alt="Las wokół siedliska — spacery na świeżym powietrzu" src="img/siedlisko/9.jpg" loading="lazy" decoding="async"></picture>
+        <div class="gallery-cell__info"><span class="gallery-cell__cat" data-i18n="page.gallery.s4">Siedlisko i natura</span><div class="gallery-cell__zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
+      </div>
+      <div class="gallery-cell" data-filter="siedlisko" data-cat="Siedlisko" data-src="img/siedlisko/10.jpg">
+        <picture><source srcset="img/siedlisko/10.webp" type="image/webp"><img alt="Staw w Siedlisku Konradówka o świcie" src="img/siedlisko/10.jpg" loading="lazy" decoding="async"></picture>
+        <div class="gallery-cell__info"><span class="gallery-cell__cat" data-i18n="page.gallery.s4">Siedlisko i natura</span><div class="gallery-cell__zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
+      </div>
+
+    </div><!-- /gallery-grid -->
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div class="g-lightbox" id="gLightbox" role="dialog" aria-modal="true" aria-label="Galeria">
+    <button class="g-lightbox__close" id="gClose" aria-label="Zamknij">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="g-lightbox__img-wrap">
+      <button class="g-lightbox__btn g-lightbox__prev" id="gPrev" aria-label="Poprzednie">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <img class="g-lightbox__img" id="gImg" src="" alt="">
+      <button class="g-lightbox__btn g-lightbox__next" id="gNext" aria-label="Następne">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+    <div class="g-lightbox__bar">
+      <span class="g-lightbox__cat-label" id="gCat"></span>
+      <div class="g-lightbox__dots" id="gDots"></div>
+      <span class="g-lightbox__counter" id="gCounter"></span>
+    </div>
+  </div>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="scripts/i18n.js" defer></script>
+  <script src="scripts/load-header.js" defer></script>
+  <script src="scripts/load-footer.js" defer></script>
+  <script src="scripts/site-manager.js" defer></script>
+  <script>
+  (function() {
+    'use strict';
+
+    // ── Filter ──────────────────────────────────────────────
+    let activeFilter = 'all';
+    let visibleCells = [];
+
+    document.querySelectorAll('.gallery-filter').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.gallery-filter').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeFilter = btn.dataset.filter;
+        applyFilter();
+      });
+    });
+
+    function applyFilter() {
+      const all = document.querySelectorAll('.gallery-cell');
+      visibleCells = [];
+      all.forEach(cell => {
+        const match = activeFilter === 'all' || cell.dataset.filter === activeFilter;
+        cell.classList.toggle('is-hidden', !match);
+        if (match) visibleCells.push(cell);
+      });
+      rebuildDots();
+    }
+
+    function rebuildDots() {
+      const dotsEl = document.getElementById('gDots');
+      if (!dotsEl) return;
+      dotsEl.innerHTML = visibleCells.map((_, i) =>
+        `<span class="g-lightbox__dot" data-idx="${i}"></span>`
+      ).join('');
+    }
+
+    applyFilter(); // init
+
+    // ── Lightbox ─────────────────────────────────────────────
+    let currentIdx = 0;
+    const lb    = document.getElementById('gLightbox');
+    const img   = document.getElementById('gImg');
+    const cat   = document.getElementById('gCat');
+    const count = document.getElementById('gCounter');
+    const dots  = document.getElementById('gDots');
+
+    function openLightbox(idx) {
+      currentIdx = idx;
+      lb.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+      loadImg(idx);
+    }
+    function closeLightbox() {
+      lb.classList.remove('is-open');
+      document.body.style.overflow = '';
+    }
+    function loadImg(idx) {
+      const cell = visibleCells[idx];
+      if (!cell) return;
+      img.classList.add('is-loading');
+      const src = cell.dataset.src;
+      const tmp = new Image();
+      tmp.onload = () => {
+        img.src = src;
+        img.alt = cell.dataset.cat || '';
+        img.classList.remove('is-loading');
+      };
+      tmp.src = src;
+      cat.textContent = cell.dataset.cat || '';
+      count.textContent = `${idx + 1} / ${visibleCells.length}`;
+      document.querySelectorAll('.g-lightbox__dot').forEach((d, i) =>
+        d.classList.toggle('active', i === idx));
+    }
+    function prev() { currentIdx = (currentIdx - 1 + visibleCells.length) % visibleCells.length; loadImg(currentIdx); }
+    function next() { currentIdx = (currentIdx + 1) % visibleCells.length; loadImg(currentIdx); }
+
+    // Open on cell click
+    document.getElementById('galleryGrid').addEventListener('click', e => {
+      const cell = e.target.closest('.gallery-cell');
+      if (!cell) return;
+      const idx = visibleCells.indexOf(cell);
+      if (idx >= 0) openLightbox(idx);
+    });
+
+    // Controls
+    document.getElementById('gClose').addEventListener('click', closeLightbox);
+    document.getElementById('gPrev').addEventListener('click', prev);
+    document.getElementById('gNext').addEventListener('click', next);
+
+    // Dot navigation
+    dots.addEventListener('click', e => {
+      const d = e.target.closest('.g-lightbox__dot');
+      if (d) { currentIdx = +d.dataset.idx; loadImg(currentIdx); }
+    });
+
+    // Keyboard
+    document.addEventListener('keydown', e => {
+      if (!lb.classList.contains('is-open')) return;
+      if (e.key === 'ArrowLeft')  prev();
+      if (e.key === 'ArrowRight') next();
+      if (e.key === 'Escape')     closeLightbox();
+    });
+
+    // Click backdrop to close
+    lb.addEventListener('click', e => {
+      if (e.target === lb || e.target === document.querySelector('.g-lightbox__img-wrap'))
+        closeLightbox();
+    });
+
+    // Touch / swipe
+    let touchStartX = 0;
+    lb.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    lb.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 50) { if (dx > 0) prev(); else next(); }
+    }, { passive: true });
+
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "name": "siedlisko-konradowka",
+  "version": "2.0.0",
+  "description": "Siedlisko Konradówka — strona internetowa siedliska na Mazurach (Kukowo). Frontend statyczny + backend Node.js/Express dla rezerwacji.",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "nodemon server/server.js"
+  },
+  "keywords": ["mazury", "noclegi", "siedlisko", "kukowo", "agroturystyka"],
+  "author": "Siedlisko Konradówka",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "nodemailer": "^6.9.13",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}

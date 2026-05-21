@@ -1,0 +1,133 @@
+{
+  "_comment": "Łatwo edytowalny cennik. Zmieniaj wartości — strona sama się zaktualizuje. Aby ukryć ceny — ustaw 'showPrices': false (wtedy wyświetli się 'Wycena indywidualna').",
+  "showPrices": true,
+  "currency": "PLN",
+  "currencySymbol": "zł",
+  "lastUpdated": "2025-05-01",
+  "konradowe-chaty": {
+    "title": "Konradowe Chaty",
+    "lowSeason": {
+      "from": 450,
+      "to": 650
+    },
+    "highSeason": {
+      "from": 700,
+      "to": 950
+    },
+    "minNights": 2,
+    "minNightsHighSeason": 3,
+    "lowSeasonLabel": "Wrzesień–Czerwiec",
+    "highSeasonLabel": "Lipiec–Sierpień + święta",
+    "deposit": 30,
+    "depositUnit": "%",
+    "extras": [
+      {
+        "name": "Pies",
+        "price": 30,
+        "unit": "doba"
+      },
+      {
+        "name": "Sprzątanie końcowe",
+        "price": 100,
+        "unit": "pobyt"
+      },
+      {
+        "name": "Drewno do kominka",
+        "price": 30,
+        "unit": "kosz"
+      },
+      {
+        "name": "Wynajem kajaka",
+        "price": 0,
+        "unit": "w cenie"
+      },
+      {
+        "name": "Wynajem roweru",
+        "price": 0,
+        "unit": "w cenie"
+      }
+    ],
+    "included": [
+      "Pościel i ręczniki",
+      "Wi-Fi",
+      "Parking",
+      "Dostęp do pomostu",
+      "Energia, woda"
+    ]
+  },
+  "studia-stara-stajnia": {
+    "title": "Studia w Starej Stajni",
+    "lowSeason": {
+      "from": 280,
+      "to": 380
+    },
+    "highSeason": {
+      "from": 380,
+      "to": 520
+    },
+    "minNights": 1,
+    "minNightsHighSeason": 2,
+    "lowSeasonLabel": "Wrzesień–Czerwiec",
+    "highSeasonLabel": "Lipiec–Sierpień + święta",
+    "deposit": 30,
+    "depositUnit": "%",
+    "extras": [
+      {
+        "name": "Pies",
+        "price": 30,
+        "unit": "doba"
+      },
+      {
+        "name": "Sprzątanie końcowe",
+        "price": 80,
+        "unit": "pobyt"
+      }
+    ],
+    "included": [
+      "Pościel i ręczniki",
+      "Wi-Fi",
+      "Parking",
+      "Energia, woda"
+    ]
+  },
+  "kamperowisko": {
+    "title": "Kamperowisko",
+    "lowSeason": {
+      "from": 80,
+      "to": 100
+    },
+    "highSeason": {
+      "from": 110,
+      "to": 140
+    },
+    "minNights": 1,
+    "minNightsHighSeason": 1,
+    "lowSeasonLabel": "Wrzesień–Czerwiec",
+    "highSeasonLabel": "Lipiec–Sierpień",
+    "deposit": 0,
+    "depositUnit": "%",
+    "extras": [
+      {
+        "name": "Prąd 230V",
+        "price": 0,
+        "unit": "wliczony"
+      },
+      {
+        "name": "Pies",
+        "price": 0,
+        "unit": "wliczony"
+      },
+      {
+        "name": "Dodatkowa osoba",
+        "price": 20,
+        "unit": "doba"
+      }
+    ],
+    "included": [
+      "Prąd 230V",
+      "Dostęp do wody",
+      "Sanitariaty",
+      "Zrzut wód szarych"
+    ]
+  }
+}

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>TEST wizard — Kukowo</title>
+<style>
+:root {
+  --clr-cream: #FDFAF5;
+  --clr-beige: #F2EBE0;
+  --clr-sand:  #E4D9CA;
+  --clr-forest:#1E3528;
+  --clr-sage:  #4A7C59;
+  --clr-sage-hover: #3D6749;
+  --clr-gold:  #C49A3C;
+  --clr-gold-light: #E0BE6A;
+  --clr-muted: #6B7670;
+  --clr-earth: #2B2B2B;
+  --clr-bark:  #5C4A3A;
+  --ff-sans: system-ui, -apple-system, sans-serif;
+  --ff-serif: Georgia, serif;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: var(--ff-sans); padding: 2rem; background: #f5f5f5; }
+.testbox {
+  background: white; padding: 2rem; border-radius: 8px;
+  max-width: 600px; margin: 0 auto;
+}
+.testbox h1 { margin-top: 0; color: var(--clr-forest); }
+.testbox p { color: #666; }
+button.opener {
+  background: var(--clr-sage); color: white; border: none;
+  padding: 1rem 1.5rem; border-radius: 8px; font-size: 1rem;
+  cursor: pointer; margin-top: 1rem;
+}
+button.opener:hover { background: var(--clr-sage-hover); }
+.log {
+  margin-top: 2rem; padding: 1rem;
+  background: #0d1a14; color: #8aff8a;
+  font-family: monospace; font-size: 12px;
+  border-radius: 8px; min-height: 100px;
+  max-height: 300px; overflow-y: auto;
+}
+</style>
+<link rel="stylesheet" href="styles/wizard.css">
+</head>
+<body>
+
+<div class="testbox">
+  <h1>TEST formularza rezerwacji</h1>
+  <p>Kliknij przycisk poniżej. Powinien otworzyć się formularz. Klikaj <strong>Dalej</strong> — w logu na dole zobaczysz co się dzieje.</p>
+  <button class="opener" id="openBtn">Otwórz formularz</button>
+  
+  <div class="log" id="log">
+    <div>📋 Log debug:</div>
+  </div>
+</div>
+
+<div id="wizard-placeholder"></div>
+
+<script src="scripts/wizard.js"></script>
+<script>
+// Przechwytuj console.log do widocznego loga
+const logEl = document.getElementById('log');
+const origLog = console.log;
+const origErr = console.error;
+const origWarn= console.warn;
+function showLog(msg, color) {
+  const div = document.createElement('div');
+  div.style.color = color || '#8aff8a';
+  div.textContent = '› ' + msg;
+  logEl.appendChild(div);
+  logEl.scrollTop = logEl.scrollHeight;
+}
+console.log  = (...a) => { origLog (...a); showLog(a.join(' '), '#8aff8a'); };
+console.error= (...a) => { origErr (...a); showLog(a.join(' '), '#ff8a8a'); };
+console.warn = (...a) => { origWarn(...a); showLog(a.join(' '), '#ffd28a'); };
+
+// Załaduj wizard.html
+fetch('wizard.html')
+  .then(r => {
+    console.log('fetch wizard.html status=' + r.status);
+    return r.text();
+  })
+  .then(html => {
+    console.log('wizard.html loaded ' + html.length + 'B');
+    document.getElementById('wizard-placeholder').innerHTML = html;
+    console.log('innerHTML set');
+    const m = document.getElementById('reservationModal');
+    if (m) m.style.display = 'none';
+    
+    if (typeof window.initWizard === 'function') {
+      console.log('calling initWizard');
+      window.initWizard('TEST OFERTA');
+    } else {
+      console.error('window.initWizard is NOT a function!');
+    }
+  })
+  .catch(e => console.error('fetch error: ' + e.message));
+
+document.getElementById('openBtn').addEventListener('click', () => {
+  const m = document.getElementById('reservationModal');
+  if (!m) { console.error('no modal element'); return; }
+  m.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+  console.log('modal opened. step=' + m.dataset.step + ' panels=' + m.querySelectorAll('.wiz-panel').length);
+});
+</script>
+
+</body>
+</html>

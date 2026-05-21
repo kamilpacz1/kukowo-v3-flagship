@@ -1,0 +1,779 @@
+/* styles/konradowe_chaty.css */
+
+/* ======================================
+   INDYWIDUALNE STYLE PRZYCISKÓW – CZYSTY CSS
+   ====================================== */
+
+/* Wspólna baza dla wszystkich przycisków */
+/* styles/konradowe_chaty.css – ostateczne strojenie przycisków */
+
+[class^="btn-"],
+button[class^="btn-"] {
+  display: block;
+  width: fit-content;
+  margin: 1.5em auto;
+  padding: 0.75em 1.5em;
+  font-family: 'Amatic SC', cursive;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 
+    background 0.25s ease, 
+    border-color 0.25s ease, 
+    color 0.25s ease, 
+    transform 0.15s ease, 
+    box-shadow 0.15s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* 1 & 3: Poznaj atrakcje + Wyślij zapytanie – delikatny taupe */
+.btn-attractions,
+.btn-submit {
+  background: #8a7d72;      /* łagodny taupe */
+  border: 2px solid #6e5f54;
+  color: #faf5ef;
+}
+.btn-attractions:hover,
+.btn-submit:hover,
+.btn-attractions:focus,
+.btn-submit:focus {
+  background: #a3988f;      /* rozjaśniony taupe */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+}
+
+
+/* 2: Zapytaj o rezerwację – jasna, kontrastowa płótno */
+.btn-reservation {
+  display: inline-block;
+  margin: 0.5em auto;         /* mniejszy odstęp */
+  padding: 0.25em 0.8em;       /* bardzo mały padding */
+  font-size: 0.9rem;           /* mniejszy tekst */
+  line-height: 1;
+  border: 1px solid #5a3e1b;
+  border-radius: 4px;
+  background: #e8d6c4;
+  color: #5a3e1b;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+  transition: background 0.2s, transform 0.15s, box-shadow 0.15s;
+}
+.btn-reservation:hover,
+.btn-reservation:focus {
+  background: #d1b9a4;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+
+/* ======================================
+   POZOSTAŁE STYLE (bez zmian)
+   ====================================== */
+
+:root {
+  --accent-color: #007BFF;
+  --bg-light: #f7f7f7;
+  --text-color: #333;
+  --font-descriptive: 'Cormorant Garamond', serif;
+  --font-special: 'Amatic SC', cursive;
+  --font-headings: 'Playfair Display', serif;
+}
+
+body {
+  font-family: var(--font-descriptive);
+  font-size: 16px;
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+h1, h3,
+.side-nav-header,
+.header-container nav ul li a,
+.attractions-preview h3,
+.google-reviews-section h2 {
+  font-family: var(--font-headings);
+}
+
+.property-left h3,
+.attractions-preview h3 {
+  text-align: center;
+}
+
+.property-left h2 {
+  font-family: var(--font-special);
+  font-size: 56px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* ==========================
+   Featured Images (Dynamiczny kolaż zdjęć)
+   ========================== */
+
+.featured-images {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 300px 300px;
+  gap: 10px;
+  width: 90%;
+  max-width: 1200px;
+  margin: 40px auto;
+}
+
+.left-image {
+  grid-row: 1 / span 2;
+  grid-column: 1;
+  overflow: hidden;
+  position: relative;
+}
+.left-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+.left-image img:hover {
+  transform: scale(1.05);
+}
+
+.right-top {
+  grid-row: 1;
+  grid-column: 2;
+  display: flex;
+  gap: 10px;
+}
+.right-top img {
+  width: 50%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+.right-top img:hover {
+  transform: scale(1.05);
+}
+
+.right-bottom {
+  grid-row: 2;
+  grid-column: 2;
+  display: flex;
+  gap: 10px;
+}
+.right-bottom img {
+  width: 50%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+.right-bottom img:hover {
+  transform: scale(1.05);
+}
+
+.right4-wrapper {
+  position: relative;
+  width: 50%;
+  overflow: hidden;
+}
+.right4-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+.right4-wrapper img:hover {
+  transform: scale(1.05);
+}
+
+.show-all-btn {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  padding: 8px 12px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: background 0.3s ease;
+}
+.show-all-btn:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+/* ==========================
+   Sekcja: Property Wrapper (Opis obiektu + sticky formularz)
+   ========================== */
+
+.property-wrapper {
+  background: linear-gradient(180deg, #fff, var(--bg-light));
+  padding: 40px 0;
+}
+
+.property-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 40px;
+  position: relative;
+}
+
+.property-container {
+  display: flex;
+  gap: 40px;
+}
+
+.property-left {
+  flex: 2;
+}
+.property-left .subtitle {
+  font-size: 18px;
+  color: #777;
+  margin-bottom: 20px;
+}
+.property-left p {
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+/* ==========================
+   Sekcja: Udogodnień – lista
+   ========================== */
+
+.amenities-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 20px;
+}
+.amenities-list li {
+  position: relative;
+  padding: 8px 12px 8px 32px;
+  background: var(--bg-light);
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #333;
+  transition: transform 0.3s ease, background-color 0.3s ease, font-weight 0.3s ease;
+}
+.amenities-list li:hover {
+  transform: scale(1.05);
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+.amenities-list li::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.85;
+}
+
+/* Nowe ikony */
+.amenity-bathroom::before { background-image: url("../img/icons/lazienka.png"); }
+.amenity-kitchen::before  { background-image: url("../img/icons/kuchnia.png"); }
+.amenity-tech::before     { background-image: url("../img/icons/wifi.png"); }
+.amenity-terrace::before  { background-image: url("../img/icons/taras.png"); }
+.amenity-sport::before    { background-image: url("../img/icons/kajak.png"); }
+.amenity-bedroom::before  { background-image: url("../img/icons/sypialnia.png"); }
+.amenity-fireplace::before  { background-image: url("../img/icons/kominek.png"); }
+.amenity-sofa::before  { background-image: url("../img/icons/sofa.png"); }
+
+/* ==========================
+   Sekcja: Property Right (sticky kolumna)
+   ========================== */
+
+.property-right {
+  flex: 1;
+  position: sticky;
+  top: 20px;
+  align-self: start;
+  overflow: hidden;
+  width: 320px;
+}
+
+/* ==========================
+   Sekcja: Video + Overlay (Formularz)
+   ========================== */
+
+.video-with-overlay-container {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  border: 5px solid #ccc;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+.video-with-overlay-container:hover {
+  transform: scale(1.02);
+}
+
+.form-video-bg {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.form-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  margin: 20px;
+  padding: 15px;
+  background: rgba(0,0,0,0.5);
+  border-radius: 8px;
+  color: #fff;
+  z-index: 1;
+  overflow-y: auto;
+  max-height: calc(100% - 40px);
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+  border: 2px solid rgba(255,255,255,0.4);
+  transition: background 0.3s ease;
+}
+.form-overlay h3 {
+  margin-bottom: 10px;
+  font-size: 18px;
+  text-align: center;
+}
+.form-overlay label {
+  display: block;
+  margin: 10px 0 4px;
+  font-weight: bold;
+  color: #fff;
+}
+.form-overlay input {
+  width: 100%;
+  margin-bottom: 8px;
+  padding: 6px;
+  border-radius: 3px;
+  border: none;
+  font-size: 14px;
+}
+
+/* ==========================
+   Sekcja: Mapa
+   ========================== */
+
+.map-section {
+  background: #fff;
+  padding: 40px 0;
+  text-align: center;
+}
+.map-section h3 {
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+.map-section p {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 20px;
+}
+.map-iframe-wrapper {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* ==========================
+   Sekcja: Opinie Google
+   ========================== */
+
+.google-reviews-section {
+  background: #f8f8f8;
+  padding: 60px 0;
+  text-align: center;
+}
+.google-reviews-section h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+.google-reviews-section .reviews-subtitle {
+  font-size: 16px;
+  color: #777;
+  margin-bottom: 30px;
+}
+
+/* ==========================
+   Sekcja: Modal z formularzem szczegółowym
+   ========================== */
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.5);
+}
+.modal-content {
+  background-color: #fff;
+  margin: 80px auto;
+  padding: 20px;
+  width: 90%;
+  max-width: 600px;
+  border-radius: 8px;
+  position: relative;
+}
+.close-modal {
+  position: absolute;
+  top: 15px; right: 20px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+}
+.close-modal:hover {
+  color: #666;
+}
+.modal-content h2 {
+  margin-bottom: 20px;
+}
+#detailedReservationForm .form-row {
+  margin-bottom: 10px;
+}
+#detailedReservationForm label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+#detailedReservationForm input,
+#detailedReservationForm textarea {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* ==========================
+   Sekcja: Lightbox
+   ========================== */
+
+.lightbox {
+  display: none;
+  position: fixed;
+  z-index: 10000;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.9);
+}
+.lightbox-content {
+  display: block;
+  margin: auto;
+  max-width: 80%;
+  max-height: 80%;
+  animation: zoomIn 0.3s;
+}
+@keyframes zoomIn {
+  from { transform: scale(0.7); }
+  to   { transform: scale(1); }
+}
+.close,
+.prev,
+.next {
+  position: absolute;
+  color: #fff;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+.close {
+  top: 20px; right: 35px;
+  font-size: 40px; font-weight: bold;
+}
+.prev,
+.next {
+  top: 50%;
+  padding: 16px;
+  font-size: 30px; font-weight: bold;
+  user-select: none;
+}
+.prev { left: 20px; }
+.next { right: 20px; }
+.close:hover,
+.prev:hover,
+.next:hover {
+  color: #bbb;
+}
+
+/* ==========================
+   Media Queries Specyficzne dla podstrony
+   ========================== */
+
+@media (max-width: 992px) {
+  .property-container {
+    flex-direction: column;
+  }
+  .property-right {
+    position: static;
+    margin-top: 20px;
+    width: 100%;
+  }
+  .video-with-overlay-container {
+    height: 500px;
+  }
+}
+
+@media (max-width: 768px) {
+  .featured-images {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+  }
+  .left-image {
+    grid-row: 1;
+    height: 250px;
+  }
+  .right-top,
+  .right-bottom {
+    display: flex;
+    gap: 10px;
+    height: 200px;
+  }
+  .right-top img,
+  .right-bottom img,
+  .right4-wrapper {
+    width: 50%;
+  }
+  .show-all-btn {
+    font-size: 12px;
+  }
+  .chaty-apartamenty-link {
+    display: none;
+  }
+}
+
+/* ==========================
+   Nowe ustawienia czcionki dla formularzy (Lato)
+   ========================== */
+
+#quickReservationForm,
+#detailedReservationForm,
+#quickReservationForm *,
+#detailedReservationForm * {
+  font-family: 'Lato', sans-serif;
+}
+
+/* przycisk “Zapytaj o rezerwację” ma znowu Amatic SC */
+#quickReservationForm .btn-reservation {
+  font-family: 'Amatic SC', cursive;
+  font-size: 1.5rem; /* dopasowane do reszty btn-ów */
+}
+
+
+/* ==========================
+   Komunikaty formularza
+   ========================== */
+
+.form-response {
+  display: block;
+  margin: 1em 0;
+  padding: 0.75em 1.5em;
+  font-family: 'Amatic SC', cursive;
+  font-size: 1.25rem;
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  transition: background 0.25s ease, color 0.25s ease;
+}
+.form-response.success {
+  background: #8a7d72;      /* łagodny taupe */
+  border: 2px solid #6e5f54;
+  color: #faf5ef;
+}
+.form-response.error {
+  background: #e8d6c4;      /* jasne płótno z akcentem */
+  border: 2px solid #5a3e1b;
+  color: #5a3e1b;
+}
+.email-form input:invalid,
+.email-form textarea:invalid {
+  border-color: #e0b4a4;
+  box-shadow: 0 0 0 2px rgba(224,180,164,0.4);
+}
+.email-form .honeypot,
+.honeypot {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+/* ==========================
+   Strzałka boczna z napisem (styl pionowy, subtelny)
+   ========================== */
+
+.chaty-apartamenty-link {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  overflow: hidden;
+  padding: 10px;
+  text-decoration: none;
+  z-index: 10000;
+  transition: padding 0.3s ease, background 0.3s ease;
+}
+.chaty-apartamenty-link.link-left {
+  left: 0;
+  right: auto;
+  border-radius: 0 16px 16px 0;
+  flex-direction: row-reverse;
+}
+.chaty-apartamenty-link.link-right {
+  right: 0;
+  left: auto;
+  border-radius: 16px 0 0 16px;
+  flex-direction: row;
+}
+.chaty-apartamenty-link img {
+  vertical-align: middle;
+  width: 40px;
+  height: auto;
+  transition: transform 0.3s ease;
+}
+.chaty-apartamenty-link:hover {
+  padding: 10px 20px;
+  background: rgba(255,255,255,0.98);
+}
+.chaty-apartamenty-link:hover img {
+  transform: scale(1.1);
+}
+.chaty-apartamenty-link .arrow-text {
+  display: none;
+  opacity: 0;
+  white-space: nowrap;
+  font-family: 'Amatic SC', cursive;
+  font-size: 1.6rem;
+  color: #5a3e1b;
+  line-height: 1.3;
+  margin: 0 10px;
+}
+.chaty-apartamenty-link:hover .arrow-text {
+  display: block;
+  opacity: 1;
+}
+
+/* ======================================
+   Customowe ikonki przed i po hoverze
+   ====================================== */
+
+/* domyślnie pokazujemy tylko ikonę default */
+.chaty-apartamenty-link .icon-hover {
+  display: none;
+}
+/* po najechaniu chowamy default, pokazujemy hover */
+.chaty-apartamenty-link:hover .icon-default {
+  display: none;
+}
+.chaty-apartamenty-link:hover .icon-hover {
+  display: inline-block;
+}
+
+/* ==========================
+   Ukryte dodatkowe zdjęcia
+   ========================== */
+
+#extraImages {
+  display: none;
+  margin: 20px auto;
+  width: 90%;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+}
+#extraImages img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+#extraImages img:hover {
+  transform: scale(1.05);
+}
+
+/* ==========================
+   ZWIĘKSZONA szerokość FAQ
+   ========================== */
+
+.faq-section {
+  background: #fff9f4;
+  padding: 60px 20px;
+}
+.faq-section .container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+.faq-heading {
+  font-family: 'Amatic SC', cursive;
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 30px;
+  color: #5a3e1b;
+}
+.faq-item {
+  border-bottom: 1px solid #d4cfc8;
+  padding: 15px 0;
+}
+.faq-question {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  color: #5a3e1b;
+  cursor: pointer;
+  position: relative;
+  padding-right: 30px;
+  transition: color 0.3s ease;
+}
+.faq-question::after {
+  content: '+';
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 1.5rem;
+  color: #a3988f;
+  transition: transform 0.3s ease;
+}
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+.faq-item.open .faq-answer {
+  max-height: 200px;
+  margin-top: 10px;
+}
+.faq-item.open .faq-question::after {
+  content: '−';
+}
+
+/* ==========================
+   BLOKADA PRZECIĄGANIA OBRAZÓW I WIDEO
+   ========================== */
+
+img, video {
+  -webkit-user-drag: none; /* Działa w Chrome/Safari/Edge */
+  pointer-events: auto;    /* Pozwala np. na kliknięcie w lightbox, ale blokuje przeciąganie */
+}

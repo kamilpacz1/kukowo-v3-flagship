@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kukowo.pl/sitemap.xml
+
+# Blokuj foldery z danymi wrażliwymi (brak dostępu przez serwer, ale na wszelki wypadek)
+Disallow: /data/
+Disallow: /i18n/
+Disallow: /server/

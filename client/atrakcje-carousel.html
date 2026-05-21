@@ -1,0 +1,112 @@
+<!-- File: atrakcje-carousel.html -->
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Karuzela Atrakcje w Siedlisku</title>
+  <link rel="stylesheet" href="styles/atrakcje-carousel.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"/>
+  <!-- Mobile / PWA optimization -->
+  <meta name="theme-color" content="#1E3528">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Konradówka">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="manifest.webmanifest">
+</head>
+<body>
+
+  <!-- Dynamiczny nagłówek -->
+  <div id="header-placeholder"></div>
+
+  <section id="siedlisko-attractions" data-aos="fade-up">
+    <div class="container">
+      <h2>Atrakcje w Siedlisku</h2>
+      <div class="carousel-container">
+        <button class="carousel-btn carousel-btn-prev" id="prevBtn">&#10094;</button>
+        <div class="carousel-track" id="carouselTrack">
+          <div class="carousel-slide">
+            <img loading="lazy" decoding="async" src="img/siedlisko/1.jpg" alt="Swojskie Jajka">
+            <p>Swojskie Jajka</p>
+          </div>
+          <div class="carousel-slide">
+            <img loading="lazy" decoding="async" src="img/siedlisko/2.jpg" alt="Pływanie po stawie">
+            <p>Pływanie po stawie</p>
+          </div>
+          <div class="carousel-slide">
+            <img loading="lazy" decoding="async" src="img/siedlisko/3.jpg" alt="Pływanie po jeziorze">
+            <p>Pływanie po jeziorze</p>
+          </div>
+          <div class="carousel-slide">
+            <img loading="lazy" decoding="async" src="img/siedlisko/4.jpg" alt="Pomost nad stawem">
+            <p>Pomost nad stawem</p>
+          </div>
+          <div class="carousel-slide">
+            <img loading="lazy" decoding="async" src="img/siedlisko/5.jpg" alt="Pobliskie jeziora">
+            <p>Pobliskie jeziora</p>
+          </div>
+          <div class="carousel-slide">
+            <img loading="lazy" decoding="async" src="img/siedlisko/6.jpg" alt="Wieczory przy kominku">
+            <p>Wieczory przy kominku</p>
+          </div>
+          <div class="carousel-slide">
+            <img loading="lazy" decoding="async" src="img/siedlisko/7.jpg" alt="Malownicze krajobrazy">
+            <p>Malownicze krajobrazy</p>
+          </div>
+          <div class="carousel-slide">
+            <img loading="lazy" decoding="async" src="img/siedlisko/8.jpg" alt="Dary natury">
+            <p>Dary natury</p>
+          </div>
+          <div class="carousel-slide">
+            <img loading="lazy" decoding="async" src="img/siedlisko/9.jpg" alt="Zwierzęta">
+            <p>Zwierzęta</p>
+          </div>
+          <div class="carousel-slide">
+            <img loading="lazy" decoding="async" src="img/siedlisko/10.jpg" alt="Długie spacery">
+            <p>Długie spacery</p>
+          </div>
+        </div>
+        <button class="carousel-btn carousel-btn-next" id="nextBtn">&#10095;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dynamiczna stopka -->
+  <div id="footer-placeholder"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js" crossorigin="anonymous"></script>
+  <script src="scripts/load-header.js"></script>
+  <script src="scripts/load-footer.js"></script>
+  <script>
+    AOS.init({ duration: 1000, once: true });
+
+    // Obsługa karuzeli
+    document.addEventListener("DOMContentLoaded", function() {
+      const track = document.getElementById('carouselTrack');
+      const slides = Array.from(track.children);
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      let current = 0;
+
+      function update() {
+        const visible = window.innerWidth > 800 ? 4 : window.innerWidth > 500 ? 2 : 1;
+        const w = track.getBoundingClientRect().width / visible;
+        slides.forEach(s => s.style.width = `${w}px`);
+        track.style.transform = `translateX(-${current * w}px)`;
+        prevBtn.style.display = current === 0 ? 'none' : 'block';
+        nextBtn.style.display = current >= slides.length - visible ? 'none' : 'block';
+      }
+
+      prevBtn.onclick = () => { if (current > 0) current--, update(); };
+      nextBtn.onclick = () => { if (current < slides.length - visible) current++, update(); };
+      window.addEventListener('resize', update);
+      update();
+    });
+
+    // Boczne menu
+    function openNav() { document.getElementById("sideNav").style.width = "250px"; }
+    function closeNav() { document.getElementById("sideNav").style.width = "0"; }
+  </script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+/* File: styles/atrakcje-carousel.css */
+
+/* Sekcja karuzeli */
+#siedlisko-attractions {
+  padding: 60px 0;
+  background-color: #f8f8f8;
+}
+
+/* Kontener i tor slajdów */
+.carousel-container {
+  position: relative;
+  overflow: hidden;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.carousel-track {
+  display: flex;
+  transition: transform 0.3s ease;
+}
+
+/* Pojedynczy slajd */
+.carousel-slide {
+  position: relative;
+  flex: 0 0 auto;
+}
+.carousel-slide img {
+  display: block;
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.carousel-slide:hover img {
+  transform: scale(1.03);
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+/* Opis na zdjęciu */
+.carousel-slide p {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+}
+
+/* Przyciski nawigacji */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.4);
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 24px;
+  z-index: 10;
+  transition: background 0.2s ease;
+}
+.carousel-btn-prev { left: 0; }
+.carousel-btn-next { right: 0; }
+.carousel-btn:hover {
+  background: rgba(0,0,0,0.6);
+}

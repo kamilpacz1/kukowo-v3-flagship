@@ -1,0 +1,159 @@
+/* styles/header.css */
+
+/* ========== GŁÓWNY HEADER (duży, kolorowy) ========== */
+.main-header {
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 10;
+  backdrop-filter: blur(8px);
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  transition: padding 0.3s ease;
+}
+
+.logo h1 a {
+  font-family: 'Amatic SC', cursive;
+  font-size: 2rem;
+  color: #5a3e1b;
+  text-decoration: none;
+  transition: font-size 0.3s ease, color 0.3s ease;
+}
+
+.logo h1 a:hover {
+  color: #8a7d72;
+}
+
+.desktop-nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  padding: 0;
+  margin: 0;
+}
+
+.desktop-nav ul li a {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  color: #333;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.desktop-nav ul li a:hover {
+  color: #8a7d72;
+}
+
+.social-icons {
+  position: relative;
+  display: flex;
+  gap: 10px;
+}
+
+.social-icons img {
+  width: 28px;
+  height: 28px;
+  transition: transform 0.3s ease;
+}
+
+.social-icons img:hover {
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+.menu-btn {
+  display: none;
+  font-family: 'Amatic SC', cursive;
+  font-size: 1.5rem;
+  color: #5a3e1b;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.menu-btn:hover {
+  color: #8a7d72;
+}
+
+/* ========== STICKY HEADER (pojawia się przy scrollu) ========== */
+.sticky-header {
+  position: fixed;
+  top: -100px;
+  left: 0;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  transition: top 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sticky-header.visible {
+  top: 0;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.sticky-header .logo a {
+  font-family: 'Amatic SC', cursive;
+  font-size: 1.5rem;
+  color: #5a3e1b;
+  text-decoration: none;
+}
+
+.sticky-header .desktop-nav ul {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+  padding: 0;
+  margin: 0;
+}
+
+.sticky-header .desktop-nav ul li a {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.95rem;
+  color: #333;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.sticky-header .desktop-nav ul li a:hover {
+  color: #8a7d72;
+}
+
+.sticky-header .social-icons img {
+  width: 24px;
+  height: 24px;
+  filter: grayscale(100%);
+  transition: transform 0.3s ease;
+}
+
+.sticky-header .social-icons img:hover {
+  transform: scale(1.1);
+}
+
+/* ========== MEDIA QUERIES ========== */
+@media (max-width: 768px) {
+  .desktop-nav {
+    display: none;
+  }
+
+  .menu-btn {
+    display: block;
+  }
+
+  .social-icons img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .sticky-header .social-icons img {
+    width: 20px;
+    height: 20px;
+  }
+}

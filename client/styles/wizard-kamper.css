@@ -1,0 +1,252 @@
+/* ============================================================
+   wizard.css — bulletproof: modal scrolls, dialog grows naturally
+   ============================================================ */
+
+/* MODAL — fills viewport, scrolls if dialog is too tall */
+.wiz-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 2rem 1rem;
+}
+.wiz-modal[style*="flex"],
+.wiz-modal[style*="block"] {
+  display: flex !important;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+/* Backdrop */
+.wiz-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 28, 18, 0.72);
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+}
+
+/* DIALOG — natural height, no max-height, no overflow */
+.wiz-dialog {
+  position: relative;
+  z-index: 1;
+  background: var(--clr-cream);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 520px;
+  box-shadow: 0 24px 64px rgba(15, 28, 18, 0.35);
+  animation: wiz-in 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+  margin: auto 0;
+}
+@keyframes wiz-in {
+  from { opacity: 0; transform: translateY(20px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Form — no flex, just a wrapper */
+.wiz-form { width: 100%; }
+
+/* HEADER */
+.wiz-header {
+  background: var(--clr-forest);
+  padding: 1.5rem 1.75rem 1.25rem;
+}
+.wiz-header__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+  gap: 1rem;
+}
+.wiz-header__label {
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(196, 154, 60, 0.7);
+  margin-bottom: 4px;
+}
+.wiz-header__title {
+  font-family: var(--ff-serif);
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--clr-cream);
+  line-height: 1.2;
+}
+.wiz-close {
+  background: rgba(255,255,255,0.1);
+  border: none;
+  color: rgba(255,255,255,0.7);
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s;
+  flex-shrink: 0;
+}
+.wiz-close:hover { background: rgba(255,255,255,0.2); color: #fff; }
+.wiz-phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  color: rgba(253, 250, 245, 0.65);
+  text-decoration: none;
+}
+.wiz-phone:hover { color: var(--clr-gold-light); }
+
+/* STEPS */
+.wiz-steps {
+  display: flex;
+  align-items: center;
+  padding: 1.25rem 1.75rem;
+  background: var(--clr-beige);
+  border-bottom: 1px solid var(--clr-sand);
+}
+.wiz-step {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.wiz-step__dot {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: var(--clr-sand);
+  color: var(--clr-muted);
+  font-size: 0.7rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
+}
+.wiz-step span {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--clr-muted);
+}
+.wiz-step.active .wiz-step__dot { background: var(--clr-sage); color: #fff; }
+.wiz-step.active span { color: var(--clr-forest); }
+.wiz-step.done .wiz-step__dot { background: var(--clr-sage); color: #fff; }
+.wiz-step__line { flex: 1; height: 1px; background: var(--clr-sand); margin: 0 8px; }
+
+/* BODY — natural height, no overflow */
+.wiz-body {
+  padding: 1.5rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+
+/* PANELS */
+.wiz-panel { display: flex; flex-direction: column; gap: 0.875rem; }
+.wiz-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.875rem; }
+.wiz-field { display: flex; flex-direction: column; gap: 0.3rem; }
+.wiz-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--clr-muted);
+}
+.wiz-input {
+  width: 100%;
+  padding: 0.65rem 0.875rem;
+  background: var(--clr-cream);
+  border: 1.5px solid var(--clr-sand);
+  border-radius: 8px;
+  font-family: var(--ff-sans);
+  font-size: 0.95rem;
+  color: var(--clr-earth);
+  transition: border-color 0.15s, box-shadow 0.15s;
+  appearance: none;
+}
+.wiz-input:focus {
+  outline: none;
+  border-color: var(--clr-sage);
+  box-shadow: 0 0 0 3px rgba(74, 124, 89, 0.12);
+}
+.wiz-input--readonly {
+  background: var(--clr-beige);
+  color: var(--clr-forest);
+  font-weight: 500;
+  cursor: default;
+}
+.wiz-textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
+.wiz-hint { font-size: 0.7rem; color: var(--clr-muted); font-style: italic; }
+
+.wiz-summary {
+  background: var(--clr-beige);
+  border-radius: 10px;
+  padding: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: var(--clr-earth);
+  border: 1px solid var(--clr-sand);
+}
+
+/* NAV — block element after body, always rendered */
+.wiz-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.75rem 1.25rem;
+  background: var(--clr-cream);
+  border-top: 1px solid var(--clr-sand);
+}
+.wiz-nav__right { display: flex; gap: 0.5rem; }
+
+.wiz-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.65rem 1.25rem;
+  border-radius: 8px;
+  font-family: var(--ff-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  border: none;
+}
+.wiz-btn--ghost {
+  background: transparent;
+  color: var(--clr-muted);
+  border: 1.5px solid var(--clr-sand);
+}
+.wiz-btn--ghost:hover:not(:disabled) {
+  border-color: var(--clr-bark);
+  color: var(--clr-earth);
+}
+.wiz-btn--ghost:disabled { opacity: 0.4; cursor: not-allowed; }
+.wiz-btn--primary { background: var(--clr-sage); color: #fff; }
+.wiz-btn--primary:hover {
+  background: var(--clr-sage-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(74, 124, 89, 0.25);
+}
+.wiz-btn--primary:active { transform: scale(0.98); }
+
+.wiz-response {
+  font-size: 0.875rem;
+  text-align: center;
+  margin: 0.5rem 0 0;
+  min-height: 1.2em;
+  color: var(--clr-sage);
+}
+
+@media (max-width: 560px) {
+  .wiz-modal { padding: 1rem 0.5rem; }
+  .wiz-dialog { border-radius: 12px; }
+  .wiz-header { padding: 1.25rem 1.25rem 1rem; }
+  .wiz-body { padding: 1.25rem; }
+  .wiz-steps { padding: 1rem 1.25rem; }
+  .wiz-nav { padding: 0.875rem 1.25rem 1rem; }
+  .wiz-row { grid-template-columns: 1fr; }
+  .wiz-step span { display: none; }
+}

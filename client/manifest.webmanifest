@@ -1,0 +1,27 @@
+{
+  "name": "Siedlisko Konradówka",
+  "short_name": "Konradówka",
+  "description": "Domki, studia i kamperowisko nad stawem w Kukowie na Mazurach.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#FAF3E2",
+  "theme_color": "#1E3528",
+  "lang": "pl",
+  "categories": ["travel", "lifestyle"],
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "img/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

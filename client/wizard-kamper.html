@@ -1,0 +1,114 @@
+<!-- wizard-kamper.html — Formularz Kamperowisko -->
+<div id="reservationModal" class="wiz-modal">
+  <div class="wiz-backdrop" id="wizBackdrop"></div>
+  <div class="wiz-dialog" role="dialog" aria-modal="true" aria-labelledby="wizTitleK">
+
+    <form id="wizardForm" class="wiz-form" novalidate>
+
+      <!-- Header -->
+      <div class="wiz-header">
+        <div class="wiz-header__top">
+          <div>
+            <p class="wiz-header__label" data-i18n="wizard.label">Rezerwacja bezpośrednia</p>
+            <h2 class="wiz-header__title" id="wizTitleK" data-i18n="wizard.title.kamper">Zapytanie o miejsce</h2>
+          </div>
+          <button type="button" class="wiz-close" id="closeModal" aria-label="Zamknij">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <a href="tel:+48604083659" class="wiz-phone">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8 19.79 19.79 0 012 1.18 2 2 0 014 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+          <span data-i18n="wizard.or">Lub zadzwoń:</span> +48 604 083 659
+        </a>
+      </div>
+
+      <div class="wiz-steps">
+        <div class="wiz-step active" data-step="1"><div class="wiz-step__dot">1</div><span data-i18n="wizard.kamper.step1">Szczegóły</span></div>
+        <div class="wiz-step__line"></div>
+        <div class="wiz-step" data-step="2"><div class="wiz-step__dot">2</div><span data-i18n="wizard.step2">Kontakt</span></div>
+        <div class="wiz-step__line"></div>
+        <div class="wiz-step" data-step="3"><div class="wiz-step__dot">3</div><span data-i18n="wizard.step3">Wyślij</span></div>
+      </div>
+
+      <div class="wiz-body">
+        <div class="honeypot" aria-hidden="true" style="display:none;">
+          <input type="text" name="_hp" tabindex="-1" autocomplete="off" value="">
+        </div>
+
+        <div class="wiz-panel" data-step="1">
+          <div class="wiz-row">
+            <div class="wiz-field">
+              <label class="wiz-label" for="w-adults" data-i18n="wizard.field.adults">Dorośli</label>
+              <input class="wiz-input" type="number" id="w-adults" name="adults" min="1" value="2">
+            </div>
+            <div class="wiz-field">
+              <label class="wiz-label" for="w-children" data-i18n="wizard.field.children">Dzieci</label>
+              <input class="wiz-input" type="number" id="w-children" name="children" min="0" value="0">
+            </div>
+          </div>
+          <div class="wiz-row">
+            <div class="wiz-field">
+              <label class="wiz-label" for="w-arrival" data-i18n="wizard.field.arrival">Data przyjazdu</label>
+              <input class="wiz-input" type="date" id="w-arrival" name="arrival">
+            </div>
+            <div class="wiz-field">
+              <label class="wiz-label" for="w-departure" data-i18n="wizard.field.departure">Data wyjazdu</label>
+              <input class="wiz-input" type="date" id="w-departure" name="departure">
+            </div>
+          </div>
+          <div class="wiz-field">
+            <label class="wiz-label" for="w-vehicle" data-i18n="wizard.field.vehicle">Typ pojazdu</label>
+            <select class="wiz-input" id="w-vehicle" name="vehicle">
+              <option value="kamper" data-i18n="form.vehicle.camper">Kamper</option>
+              <option value="przyczepa" data-i18n="form.vehicle.trailer">Przyczepa kempingowa</option>
+              <option value="namiot" data-i18n="form.vehicle.tent">Namiot</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="wiz-panel" data-step="2" style="display:none;">
+          <div class="wiz-field">
+            <label class="wiz-label" for="w-name" data-i18n="wizard.field.fullName">Imię i nazwisko</label>
+            <input class="wiz-input" type="text" id="w-name" name="name" autocomplete="name">
+          </div>
+          <div class="wiz-field">
+            <label class="wiz-label" for="w-email" data-i18n="wizard.field.email">E-mail</label>
+            <input class="wiz-input" type="email" id="w-email" name="email" autocomplete="email">
+          </div>
+          <div class="wiz-field">
+            <label class="wiz-label" for="w-phone" data-i18n="wizard.field.phone">Telefon</label>
+            <input class="wiz-input" type="tel" id="w-phone" name="phone" autocomplete="tel">
+          </div>
+        </div>
+
+        <div class="wiz-panel" data-step="3" style="display:none;">
+          <div class="wiz-field">
+            <label class="wiz-label" for="w-message" data-i18n="wizard.field.message">Dodatkowe pytania lub uwagi</label>
+            <textarea class="wiz-input wiz-textarea" id="w-message" name="message" rows="3"></textarea>
+          </div>
+          <div class="wiz-summary" id="kamperSummary"></div>
+        </div>
+
+        <p class="wiz-response form-response"></p>
+      </div>
+
+      <div class="wiz-nav">
+        <button type="button" class="wiz-btn wiz-btn--ghost" id="prevBtn" disabled>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+          <span data-i18n="wizard.back">Wstecz</span>
+        </button>
+        <div class="wiz-nav__right">
+          <button type="button" class="wiz-btn wiz-btn--primary" id="nextBtn">
+            <span data-i18n="wizard.next">Dalej</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button type="submit" class="wiz-btn wiz-btn--primary" id="submitBtn" style="display:none;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <span data-i18n="wizard.submit">Wyślij zapytanie</span>
+          </button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>

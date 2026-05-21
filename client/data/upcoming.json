@@ -1,0 +1,212 @@
+[
+    {
+      "name": "XII Olecka Trzynastka (bieg uliczny)",
+      "date": "2025-05-17",
+      "place": "Stadion Miejski, Olecko",
+      "coordinates": { "lat": 54.0341, "lng": 22.5070 },
+      "description": "Bieg na dystansie ~13 km oraz towarzyszące biegi dla różnych kategorii wiekowych w malowniczej scenerii Olecka.",
+      "url": { "text": "kalendarztriathlonowy.pl", "href": "https://kalendarztriathlonowy.pl" },
+      "category": "Sport"
+    },
+    {
+      "name": "22. Światowy Festiwal Folkloru „Tęcza”",
+      "date": "2025-06-26",
+      "endDate": "2025-06-29",
+      "place": "Amfiteatr ECK, ul. Piłsudskiego 10, Ełk",
+      "coordinates": { "lat": 53.8265, "lng": 22.3572 },
+      "description": "Międzynarodowy festiwal folklorystyczny z udziałem zespołów ludowych z różnych krajów.",
+      "url": { "text": "samorzad.pap.pl", "href": "https://samorzad.pap.pl" },
+      "category": "Kultura"
+    },
+    {
+      "name": "Mazurskie Lato Muzyczne – gala z TVP",
+      "date": "2025-08-09",
+      "place": "Plaża miejska / promenada, Ełk",
+      "coordinates": { "lat": 53.8280, "lng": 22.3500 },
+      "description": "Telewizyjna gala muzyczna transmitowana przez TVP, z udziałem popularnych artystów.",
+      "url": { "text": "samorzad.pap.pl", "href": "https://samorzad.pap.pl" },
+      "category": "Muzyka"
+    },
+    {
+      "name": "Mazurskie Lato Muzyczne – koncert Boys",
+      "date": "2025-08-22",
+      "place": "Plaża miejska / promenada, Ełk",
+      "coordinates": { "lat": 53.8280, "lng": 22.3500 },
+      "description": "Koncert finałowy z udziałem legendarnej grupy disco polo Boys.",
+      "url": { "text": "samorzad.pap.pl", "href": "https://samorzad.pap.pl" },
+      "category": "Muzyka"
+    },
+    {
+      "name": "Mazurskie Lato Muzyczne – koncert zespołu Enej",
+      "date": "2025-06-19",
+      "place": "Plaża miejska / amfiteatr, Ełk",
+      "coordinates": { "lat": 53.8280, "lng": 22.3500 },
+      "description": "Plenerowy koncert otwierający letni cykl imprez muzycznych w Ełku.",
+      "url": { "text": "samorzad.pap.pl", "href": "https://samorzad.pap.pl" },
+      "category": "Muzyka"
+    },
+    {
+      "name": "Odlotowe Suwałki Air Show",
+      "date": "2025-06-28",
+      "place": "Lotnisko, Suwałki",
+      "coordinates": { "lat": 54.1037, "lng": 22.9375 },
+      "description": "Pokazy akrobacji, skoki spadochronowe, strefa rodzinna i wystawa sprzętu.",
+      "url": { "text": "sot.suwalszczyzna.eu", "href": "https://sot.suwalszczyzna.eu" },
+      "category": "Sport"
+    },
+    {
+      "name": "Suwałki Blues Festival (18. edycja)",
+      "date": "2025-07-10",
+      "endDate": "2025-07-12",
+      "place": "Plac Marii Konopnickiej, Suwałki",
+      "coordinates": { "lat": 54.1116, "lng": 22.9336 },
+      "description": "Gwiazdy bluesa: Uriah Heep, Kult, Ørganek, Blues Pills i inni.",
+      "url": { "text": "miastosuwalki.pl", "href": "https://miastosuwalki.pl" },
+      "category": "Muzyka"
+    },
+    {
+      "name": "30. Mazurskie Lato Kabaretowe „Mulatka”",
+      "date": "2025-07-10",
+      "endDate": "2025-07-13",
+      "place": "Amfiteatr nad jeziorem, Ełk",
+      "coordinates": { "lat": 53.8265, "lng": 22.3572 },
+      "description": "Występy czołowych kabaretów oraz konkurs młodych.",
+      "url": { "text": "samorzad.pap.pl", "href": "https://samorzad.pap.pl" },
+      "category": "Kultura"
+    },
+    {
+      "name": "Dni Gołdapi 2025",
+      "date": "2025-07-15",
+      "place": "Centrum miasta, Gołdap",
+      "coordinates": { "lat": 54.3074, "lng": 22.3035 },
+      "description": "Kilkudniowy cykl imprez plenerowych, koncertów i jarmarku. Dokładny termin TBC.",
+      "url": { "text": "goldap.pl", "href": "https://goldap.pl" },
+      "category": "Kultura"
+    },
+    {
+      "name": "Przystanek Olecko (festiwal muzyczny)",
+      "date": "2025-07-14",
+      "endDate": "2025-07-20",
+      "place": "Plener nad Jeziorem Oleckie Wielkie, Olecko",
+      "coordinates": { "lat": 54.0337, "lng": 22.5077 },
+      "description": "Tydzień koncertów, warsztatów i wydarzeń artystycznych nad jeziorem.",
+      "url": { "text": "mazury.biz.pl", "href": "https://mazury.biz.pl" },
+      "category": "Muzyka"
+    },
+    {
+      "name": "VIII Ełcki Festiwal Literatury i Muzyki „Ełk, będzie czytane, będzie grane”",
+      "date": "2025-07-24",
+      "endDate": "2025-07-27",
+      "place": "Ełckie Centrum Kultury, Ełk",
+      "coordinates": { "lat": 53.8266, "lng": 22.3570 },
+      "description": "Spotkania z pisarzami, warsztaty literackie i wieczorne koncerty.",
+      "url": { "text": "samorzad.pap.pl", "href": "https://samorzad.pap.pl" },
+      "category": "Kultura"
+    },
+    {
+      "name": "Balonowe Mistrzostwa Polski – XVIII Mazurskie Zawody Balonowe",
+      "date": "2025-07-24",
+      "endDate": "2025-07-27",
+      "place": "Okolice Ełku",
+      "coordinates": { "lat": 53.8290, "lng": 22.3600 },
+      "description": "Zawody balonów na ogrzane powietrze z porannymi i wieczornymi lotami.",
+      "url": { "text": "samorzad.pap.pl", "href": "https://samorzad.pap.pl" },
+      "category": "Sport"
+    },
+    {
+      "name": "Suwalski Jarmark Folkloru i Smaku + Konkurs Kulinarny „Sąsiedzi przy stole”",
+      "date": "2025-07-26",
+      "endDate": "2025-07-27",
+      "place": "Plac Marii Konopnickiej, Suwałki",
+      "coordinates": { "lat": 54.1116, "lng": 22.9336 },
+      "description": "Kiermasz rękodzieła i tradycyjny konkurs kulinarny drużyn z Polski i Litwy.",
+      "url": { "text": "sot.suwalszczyzna.eu", "href": "https://sot.suwalszczyzna.eu" },
+      "category": "Kultura"
+    },
+    {
+      "name": "„Delphia Swim” – XXXIII Olecki Maraton Pływacki",
+      "date": "2025-07-26",
+      "place": "Jezioro Oleckie Wielkie, Olecko",
+      "coordinates": { "lat": 54.0337, "lng": 22.5077 },
+      "description": "Długodystansowy maraton pływacki z ponad 30-letnią tradycją.",
+      "url": { "text": "mazury.biz.pl", "href": "https://mazury.biz.pl" },
+      "category": "Sport"
+    },
+    {
+      "name": "XVIII Ogólnopolski Turniej Siatkówki Plażowej o Puchar Burmistrza",
+      "date": "2025-08-02",
+      "endDate": "2025-08-03",
+      "place": "Plaża miejska, Olecko",
+      "coordinates": { "lat": 54.0333, "lng": 22.5038 },
+      "description": "Turniej siatkówki plażowej z udziałem drużyn z całej Polski.",
+      "url": { "text": "mazury.biz.pl", "href": "https://mazury.biz.pl" },
+      "category": "Sport"
+    },
+    {
+      "name": "Backyard Ultra „Wiewióra” Olecko",
+      "date": "2025-08-08",
+      "place": "Leśne trasy biegowe, Olecko",
+      "coordinates": { "lat": 54.0400, "lng": 22.5000 },
+      "description": "Całodobowy bieg ultra w formule last man standing.",
+      "url": { "text": "mazury.biz.pl", "href": "https://mazury.biz.pl" },
+      "category": "Sport"
+    },
+    {
+      "name": "Dni Suwałk (święto miasta)",
+      "date": "2025-08-08",
+      "endDate": "2025-08-10",
+      "place": "Bulwary nad Czarną Hańczą, Suwałki",
+      "coordinates": { "lat": 54.1100, "lng": 22.9325 },
+      "description": "Koncerty, festyny rodzinne i jarmark rękodzieła.",
+      "url": { "text": "sot.suwalszczyzna.eu", "href": "https://sot.suwalszczyzna.eu" },
+      "category": "Kultura"
+    },
+    {
+      "name": "Regionalny Festiwal Pogranicza „Kartaczewo”",
+      "date": "2025-08-04",
+      "place": "Park Miejski, Gołdap",
+      "coordinates": { "lat": 54.3085, "lng": 22.3032 },
+      "description": "Festiwal kulinarny i folklorystyczny z konkursami na kartacze.",
+      "url": { "text": "terazgoldap.pl", "href": "https://terazgoldap.pl" },
+      "category": "Kultura"
+    },
+    {
+      "name": "Active Festival Olecko",
+      "date": "2025-08-14",
+      "endDate": "2025-08-17",
+      "place": "Plaża miejska, Olecko",
+      "coordinates": { "lat": 54.0333, "lng": 22.5038 },
+      "description": "Dzienna część sportowo-rekreacyjna i wieczorne koncerty.",
+      "url": { "text": "mazury.biz.pl", "href": "https://mazury.biz.pl" },
+      "category": "Sport"
+    },
+    {
+      "name": "Ełk Rock Night: Myslovitz",
+      "date": "2025-08-16",
+      "place": "Amfiteatr nad jeziorem, Ełk",
+      "coordinates": { "lat": 53.8265, "lng": 22.3572 },
+      "description": "Koncert legendarnej grupy rockowej Myslovitz.",
+      "url": { "text": "samorzad.pap.pl", "href": "https://samorzad.pap.pl" },
+      "category": "Muzyka"
+    },
+    {
+      "name": "Festiwal Filmowy „Wajda na Nowo”",
+      "date": "2025-08-15",
+      "endDate": "2025-08-17",
+      "place": "Suwalski Ośrodek Kultury, Suwałki",
+      "coordinates": { "lat": 54.1046, "lng": 22.9290 },
+      "description": "Pokazy filmów Andrzeja Wajdy, spotkania z reżyserami i konkurs filmów krótkometrażowych.",
+      "url": { "text": "sot.suwalszczyzna.eu", "href": "https://sot.suwalszczyzna.eu" },
+      "category": "Kultura"
+    },
+    {
+        "name": "ORLEN OIL 81. Rajd Polski",
+        "date": "2025-06-13",
+        "endDate": "2025-06-15",
+        "place": "Mikołajki (Plac Wolności) i okolice, Mazury",
+        "coordinates": { "lat": 53.8030, "lng": 21.5700 },
+        "description": "Czwarta runda Mistrzostw Europy FIA (ERC). Uroczysty start na Placu Wolności w Mikołajkach, odcinki specjalne w Świętajnie (16,3 km), Olecko (20 km) i Stare Juchy (13,6 km) – każdy dwukrotnie. Łącznie ponad 190 km oesów i 801 km całkowitego dystansu.",
+        "url": { "text": "rajdpolski.pl", "href": "https://rajdpolski.pl" },
+        "category": "Motorsport"
+      }
+    ]
